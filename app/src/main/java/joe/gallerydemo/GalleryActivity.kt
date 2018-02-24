@@ -1,0 +1,103 @@
+package joe.gallerydemo
+
+import android.net.Uri
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.provider.MediaStore
+import android.support.v4.view.ViewPager
+import kotlinx.android.synthetic.main.activity_gallery.*
+
+class GalleryActivity : AppCompatActivity() ,ImageFragment.OnFragmentInteractionListener {
+
+
+    private var galleryAdapter = GalleryAdapter(supportFragmentManager)
+
+
+    private val onPageChangeListener = object : ViewPager.OnPageChangeListener {
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+        }
+
+        override fun onPageSelected(position: Int) {
+            // ……
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_gallery)
+        actionBar?.hide()
+
+//        gallery_pager = findViewById(R.id.gallery_pager)
+        gallery_pager.adapter = galleryAdapter
+        gallery_pager.addOnPageChangeListener(onPageChangeListener)
+        gallery_pager.setPageTransformer(true,ZoomOutPagerTransformer())
+
+        checkPermission()
+    }
+
+    private fun checkPermission() {
+        if (PermUtil.isGranted(this, PermUtil.SD_READ_PERM)) {
+            initData()
+        } else {
+            requestSdCardPermission()
+        }
+    }
+    private fun requestSdCardPermission() {
+        PermUtil.requestSDPermissions(this, PermUtil.SD_REQ)
+    }
+
+    private fun initData(){
+        AsyncHandler.post(Runnable { kotlin.run {
+
+                val uris = getImageUris()
+                runOnUiThread( { kotlin.run {
+                    galleryAdapter.setUris(uris)
+                    galleryAdapter.notifyDataSetChanged()}
+                })
+
+            }
+        })
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (!PermUtil.isDenied(this, PermUtil.SD_READ_PERM)) {
+            finish()
+        }
+    }
+
+    private fun getImageUris():ArrayList<Uri>{
+
+        val imgUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        var cursor = contentResolver.query(imgUri,null,null,null,null)
+        var uris = ArrayList<Uri>()
+
+        var mUri: Uri? = null
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+
+                val data = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA))
+
+                val id = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
+                mUri = Uri.withAppendedPath(imgUri, "" + id)
+
+                uris.add(mUri)
+
+            }
+            cursor.close()
+        }
+        return uris
+    }
+
+
+    override fun onFragmentInteraction(uri: Uri) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+}
