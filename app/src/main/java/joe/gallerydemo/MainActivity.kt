@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import org.jetbrains.anko.startActivity
+
 //import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +37,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun  startGallery(){
-        startActivity(Intent(this,GalleryActivity::class.java))
+//        startActivity(Intent(this,GalleryActivity::class.java))
+        startActivity<GalleryActivity>()
 
     }
 

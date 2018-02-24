@@ -49,7 +49,6 @@ class ImageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Glide.with(this)
                 .loadFromMediaStore(mUri)
-                
                 .into(image_see)
     }
 
