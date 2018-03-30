@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         when(item?.itemId){
             R.id.gallery_menu -> startGallery()
 
+            R.id.picture_menu -> startPicture()
             else ->
                     print("nothing")
         }
@@ -40,6 +41,10 @@ class MainActivity : AppCompatActivity() {
 //        startActivity(Intent(this,GalleryActivity::class.java))
         startActivity<GalleryActivity>()
 
+    }
+
+    private fun startPicture(){
+        startActivity<PictureActivity>()
     }
 
 }

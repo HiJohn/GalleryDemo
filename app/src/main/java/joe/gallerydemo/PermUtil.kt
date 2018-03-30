@@ -31,6 +31,11 @@ class PermUtil{
             return context.checkSelfPermission(permission) == PackageManager.PERMISSION_DENIED
         }
 
+        fun isSdDenied(context: Context): Boolean {
+
+            return isDenied(context,Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
 
         fun requestPermissions(activity: Activity, reqCode: Int, vararg perms: String) {
             ActivityCompat.requestPermissions(activity, perms, reqCode)

@@ -39,13 +39,13 @@ class GalleryAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
         mUris = uris
     }
 
-    override fun instantiateItem(container: ViewGroup?, position: Int): Any {
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val any =  super.instantiateItem(container, position)
         fragments.put(position,any as ImageFragment?)
         return  any
     }
 
-    override fun destroyItem(container: ViewGroup?, position: Int, `object`: Any?) {
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         fragments.remove(position)
         super.destroyItem(container, position, `object`)
     }

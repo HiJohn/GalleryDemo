@@ -24,6 +24,7 @@
             android:theme="@style/PicFullScreen">
 
         </activity>
+        <activity android:name=".PictureActivity" android:theme="@style/PicFullScreen"/>
     </application>
 
 </manifest>

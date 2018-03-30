@@ -32,9 +32,9 @@ class ImageFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            mPath = arguments.getString(ARG_PATH)
-            mUri = arguments.getParcelable(ARG_URI)
-            mPosition = arguments.getInt(ARG_POSITION)
+            mPath = arguments!!.getString(ARG_PATH)
+            mUri = arguments!!.getParcelable(ARG_URI)
+            mPosition = arguments!!.getInt(ARG_POSITION)
         }
     }
 
@@ -45,10 +45,10 @@ class ImageFragment : Fragment() {
     }
 
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Glide.with(this)
-                .loadFromMediaStore(mUri)
+                .load(mUri)
                 .into(image_see)
     }
 

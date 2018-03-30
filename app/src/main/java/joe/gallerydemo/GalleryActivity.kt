@@ -1,5 +1,6 @@
 package joe.gallerydemo
 
+import android.content.Context
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -41,63 +42,62 @@ class GalleryActivity : AppCompatActivity() ,ImageFragment.OnFragmentInteraction
     }
 
     private fun checkPermission() {
-        if (PermUtil.isGranted(this, PermUtil.SD_READ_PERM)) {
+        if (PermUtil.isSdGranted(this)) {
             initData()
         } else {
-            requestSdCardPermission()
+            PermUtil.requestSDPermissions(this, PermUtil.SD_REQ)
         }
-    }
-    private fun requestSdCardPermission() {
-        PermUtil.requestSDPermissions(this, PermUtil.SD_REQ)
     }
 
     private fun initData(){
-        AsyncHandler.post(Runnable { kotlin.run {
-
-                val uris = getImageUris()
-                runOnUiThread( { kotlin.run {
+        AsyncHandler.post(Runnable {
+                val uris = getImageUris(this)
+                runOnUiThread(  {
                     galleryAdapter.setUris(uris)
-                    galleryAdapter.notifyDataSetChanged()}
+                    galleryAdapter.notifyDataSetChanged()
                 })
 
-            }
         })
     }
 
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (!PermUtil.isDenied(this, PermUtil.SD_READ_PERM)) {
+        if (PermUtil.isSdDenied(this)) {
             finish()
         }
     }
 
-    private fun getImageUris():ArrayList<Uri>{
+    companion object {
+        fun getImageUris(context:Context):ArrayList<Uri>{
 
-        val imgUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        var cursor = contentResolver.query(imgUri,null,null,null,null)
-        var uris = ArrayList<Uri>()
+            val imgUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            var cursor = context.contentResolver.query(imgUri,null,null,null,null)
+            var uris = ArrayList<Uri>()
 
-        var mUri: Uri? = null
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
+            var mUri: Uri? = null
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
 
-                val data = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA))
+                    val data = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA))
 
-                val id = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
-                mUri = Uri.withAppendedPath(imgUri, "" + id)
+                    val id = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
+                    mUri = Uri.withAppendedPath(imgUri, "" + id)
 
-                uris.add(mUri)
+                    uris.add(mUri)
 
+                }
+                cursor.close()
             }
-            cursor.close()
+            return uris
         }
-        return uris
     }
 
 
+
+
     override fun onFragmentInteraction(uri: Uri) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 }

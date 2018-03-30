@@ -6,4 +6,9 @@
         android:id="@+id/gallery_menu"
         android:title="@string/gallery"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/picture_menu"
+        android:title="@string/picture"
+        app:showAsAction="ifRoom" />
 </menu>
