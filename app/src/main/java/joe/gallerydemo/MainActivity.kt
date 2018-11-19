@@ -1,6 +1,5 @@
 package joe.gallerydemo
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startPicture(){
-        startActivity<PictureActivity>()
+//        startActivity<GalleryActivity>()
     }
 
 }

@@ -52,10 +52,10 @@ class GalleryActivity : AppCompatActivity() ,ImageFragment.OnFragmentInteraction
     private fun initData(){
         AsyncHandler.post(Runnable {
                 val uris = getImageUris(this)
-                runOnUiThread(  {
+                runOnUiThread {
                     galleryAdapter.setUris(uris)
                     galleryAdapter.notifyDataSetChanged()
-                })
+                }
 
         })
     }
