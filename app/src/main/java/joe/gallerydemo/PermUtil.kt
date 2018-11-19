@@ -16,9 +16,11 @@ import android.support.v4.app.ActivityCompat
 class PermUtil{
 
     companion object {
-        val SD_READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE
-        val SD_WRITE_PERM = Manifest.permission.WRITE_EXTERNAL_STORAGE
-        val SD_REQ = 0
+        private const val SD_READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE
+        private const val SD_WRITE_PERM = Manifest.permission.WRITE_EXTERNAL_STORAGE
+        private const val GRANTED = PackageManager.PERMISSION_GRANTED
+        private const val DENIED = PackageManager.PERMISSION_DENIED
+        const val SD_REQ = 9111
 //        private val TAG = "PermUtil"
 
         fun isGranted(context: Context, permission: String): Boolean {
