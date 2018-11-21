@@ -1,4 +1,4 @@
-package joe.gallerydemo
+package joe.gallerydemo.util
 
 import android.Manifest
 import android.annotation.TargetApi
@@ -18,6 +18,10 @@ class PermUtil{
     companion object {
         private const val SD_READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE
         private const val SD_WRITE_PERM = Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+        private const val CAMERA_PERM = Manifest.permission.CAMERA
+        private const val AUDIO_RECORD_PERM = Manifest.permission.RECORD_AUDIO
+
         private const val GRANTED = PackageManager.PERMISSION_GRANTED
         private const val DENIED = PackageManager.PERMISSION_DENIED
         const val SD_REQ = 9111
@@ -35,7 +39,7 @@ class PermUtil{
 
         fun isSdDenied(context: Context): Boolean {
 
-            return isDenied(context,Manifest.permission.READ_EXTERNAL_STORAGE)
+            return isDenied(context, Manifest.permission.READ_EXTERNAL_STORAGE)
         }
 
 

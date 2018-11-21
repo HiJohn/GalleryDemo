@@ -1,4 +1,4 @@
-package joe.gallerydemo
+package joe.gallerydemo.util
 
 import android.os.Handler
 import android.os.HandlerThread

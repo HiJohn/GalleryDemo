@@ -6,9 +6,13 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.view.ViewPager
+import joe.gallerydemo.animator.ZoomOutPagerTransformer
+import joe.gallerydemo.fragments.ImageFragment
+import joe.gallerydemo.util.AsyncHandler
+import joe.gallerydemo.util.PermUtil
 import kotlinx.android.synthetic.main.activity_gallery.*
 
-class GalleryActivity : AppCompatActivity() ,ImageFragment.OnFragmentInteractionListener {
+class GalleryActivity : AppCompatActivity() , ImageFragment.OnFragmentInteractionListener {
 
 
     private var galleryAdapter = GalleryAdapter(supportFragmentManager)
@@ -36,7 +40,7 @@ class GalleryActivity : AppCompatActivity() ,ImageFragment.OnFragmentInteraction
 //        gallery_pager = findViewById(R.id.gallery_pager)
         gallery_pager.adapter = galleryAdapter
         gallery_pager.addOnPageChangeListener(onPageChangeListener)
-        gallery_pager.setPageTransformer(true,ZoomOutPagerTransformer())
+        gallery_pager.setPageTransformer(true, ZoomOutPagerTransformer())
 
         checkPermission()
     }

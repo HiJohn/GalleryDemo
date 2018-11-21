@@ -1,4 +1,4 @@
-package joe.gallerydemo
+package joe.gallerydemo.fragments
 
 import android.content.Context
 import android.net.Uri
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import joe.gallerydemo.R
 import kotlinx.android.synthetic.main.fragment_image.*
 
 

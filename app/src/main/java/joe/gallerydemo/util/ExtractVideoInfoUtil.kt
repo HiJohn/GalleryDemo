@@ -1,13 +1,11 @@
-package joe.gallerydemo.uti
+package joe.gallerydemo.util
 
 import android.content.Context
-import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.media.MediaMetadataRetriever
 import android.provider.MediaStore
 import android.text.TextUtils
-import joe.gallerydemo.VideoInfo
+import joe.gallerydemo.model.VideoInfo
 
 
 import java.io.File
