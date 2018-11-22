@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import joe.gallerydemo.util.PermUtil
 import org.jetbrains.anko.startActivity
 
 //import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +20,20 @@ class MainActivity : AppCompatActivity() {
 
         menuInflater.inflate(R.menu.main_menu,menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (PermUtil.isSdDenied(this)){
+            PermUtil.requestSD(this)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (PermUtil.isSdDenied(this)){
+            finish()
+        }
     }
 
 
