@@ -1,12 +1,12 @@
 package joe.gallerydemo.animator
 
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.view.View
 
 /**
  * Created by takashi on 2018/2/24.
  */
-class ZoomOutPagerTransformer : ViewPager.PageTransformer {
+class ZoomOutPagerTransformer : androidx.viewpager.widget.ViewPager.PageTransformer {
 
     companion object {
         private val MIN_SCALE = 0.85f

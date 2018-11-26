@@ -1,9 +1,9 @@
 package joe.gallerydemo
 
 import android.net.Uri
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import android.util.SparseArray
 import android.view.ViewGroup
 import joe.gallerydemo.fragments.ImageFragment
@@ -11,7 +11,7 @@ import joe.gallerydemo.fragments.ImageFragment
 /**
  * Created by takashi on 2018/2/24.
  */
-class GalleryAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
+class GalleryAdapter(fm: androidx.fragment.app.FragmentManager?) : androidx.fragment.app.FragmentStatePagerAdapter(fm) {
 
     init {
 
@@ -21,8 +21,8 @@ class GalleryAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
 
     private var mUris: ArrayList<Uri> = ArrayList()
 
-    override fun getItem(position: Int): Fragment {
-        var fragment: Fragment? = fragments.get(position)
+    override fun getItem(position: Int): androidx.fragment.app.Fragment {
+        var fragment: androidx.fragment.app.Fragment? = fragments.get(position)
         if (fragment == null) {
             val uri = mUris[position]
             fragment = ImageFragment.newInstance(position, uri.path, uri)

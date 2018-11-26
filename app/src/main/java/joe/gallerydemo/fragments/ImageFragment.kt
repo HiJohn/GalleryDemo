@@ -3,7 +3,7 @@ package joe.gallerydemo.fragments
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_image.*
  * Use the [ImageFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ImageFragment : Fragment() {
+class ImageFragment : androidx.fragment.app.Fragment() {
 
     private var mPath: String? = null
     private var mPosition: Int? = null

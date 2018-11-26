@@ -2,10 +2,10 @@ package joe.gallerydemo
 
 import android.content.Context
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import joe.gallerydemo.animator.ZoomOutPagerTransformer
 import joe.gallerydemo.fragments.ImageFragment
 import joe.gallerydemo.util.AsyncHandler
@@ -18,7 +18,7 @@ class GalleryActivity : AppCompatActivity() , ImageFragment.OnFragmentInteractio
     private var galleryAdapter = GalleryAdapter(supportFragmentManager)
 
 
-    private val onPageChangeListener = object : ViewPager.OnPageChangeListener {
+    private val onPageChangeListener = object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
         }
