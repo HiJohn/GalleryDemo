@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.provider.MediaStore
 import android.text.TextUtils
+import com.blankj.utilcode.util.LogUtils
 import joe.gallerydemo.model.VideoInfo
 
 
@@ -76,6 +77,32 @@ object ExtractVideoInfoUtil {
         return videoInfo
     }
 
+
+    fun getVideoInfoList(context: Context): ArrayList<VideoInfo>? {
+        val videoItemHashSet = HashSet<VideoInfo>()
+        var videoInfo: VideoInfo
+        val cursor = context.contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null, null)
+        try {
+            if (cursor == null) {
+                return null
+            }
+            cursor.moveToFirst()
+            do {
+                videoInfo = VideoInfo()
+                videoInfo.path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA))
+                videoInfo.width = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.WIDTH))
+                videoInfo.height = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.HEIGHT))
+                videoInfo.duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)).toLong()
+                videoItemHashSet.add(videoInfo)
+            } while (cursor.moveToNext())
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            cursor?.close()
+        }
+        return ArrayList(videoItemHashSet)
+    }
 
     fun saveImage(bmp: Bitmap?, dirPath: String): String {
         if (bmp == null) {

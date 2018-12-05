@@ -56,8 +56,17 @@ dependencies {
 //    implementation 'com.daasuu:ExoPlayerFilter:0.2.2'
 //    implementation 'com.google.android.exoplayer:exoplayer-core:2.7.0'
 //    implementation 'com.github.MasayukiSuda:CameraRecorder-android:v0.1.5'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0"
 }
 
-kapt {
-    generateStubs = true
+kotlin{
+    experimental {
+        coroutines 'enable'
+    }
 }
+
+//kapt {
+//    generateStubs = true
+//}

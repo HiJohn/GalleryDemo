@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.PermissionUtils
 import joe.gallerydemo.animator.ZoomOutPagerTransformer
 import joe.gallerydemo.fragments.ImageFragment
 import joe.gallerydemo.util.AsyncHandler
+import joe.gallerydemo.util.RxAsync
 import kotlinx.android.synthetic.main.activity_gallery.*
 
 class GalleryActivity : AppCompatActivity(), ImageFragment.OnFragmentInteractionListener {
@@ -66,14 +67,30 @@ class GalleryActivity : AppCompatActivity(), ImageFragment.OnFragmentInteraction
     }
 
     private fun initData() {
-        AsyncHandler.post(Runnable {
-            val uris = getImageUris(this)
-            runOnUiThread {
-                galleryAdapter.setUris(uris)
+
+        RxAsync.async(object:RxAsync.RxCallBack<ArrayList<Uri>>{
+            override fun call(): ArrayList<Uri> {
+                return getImageUris(this@GalleryActivity)
+            }
+
+            override fun onResult(t: ArrayList<Uri>) {
+                galleryAdapter.setUris(t)
                 galleryAdapter.notifyDataSetChanged()
             }
 
+            override fun onError(e: Throwable) {
+
+            }
         })
+
+
+//        AsyncHandler.post(Runnable {
+//            val uris = getImageUris(this@GalleryActivity)
+//            runOnUiThread {
+//                galleryAdapter.setUris(uris)
+//                galleryAdapter.notifyDataSetChanged()
+//            }
+//        })
     }
 
 
@@ -81,8 +98,8 @@ class GalleryActivity : AppCompatActivity(), ImageFragment.OnFragmentInteraction
         fun getImageUris(context: Context): ArrayList<Uri> {
 
             val imgUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            var cursor = context.contentResolver.query(imgUri, null, null, null, null)
-            var uris = ArrayList<Uri>()
+            val cursor = context.contentResolver.query(imgUri, null, null, null, null)
+            val uris = ArrayList<Uri>()
 
             var mUri: Uri? = null
             if (cursor != null) {

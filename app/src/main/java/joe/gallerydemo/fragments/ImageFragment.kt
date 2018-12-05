@@ -48,7 +48,7 @@ class ImageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        GlideApp.with(this)
+        GlideApp.with(this@ImageFragment)
                 .load(mUri)
                 .into(image_see)
     }
