@@ -4,17 +4,20 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.annotation.NonNull
+import android.support.annotation.Nullable
+import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.PermissionUtils
 import joe.gallerydemo.animator.ZoomOutPagerTransformer
 import joe.gallerydemo.fragments.ImageFragment
 import joe.gallerydemo.util.AsyncHandler
-import joe.gallerydemo.util.PermUtil
 import kotlinx.android.synthetic.main.activity_gallery.*
 
-class GalleryActivity : AppCompatActivity() , ImageFragment.OnFragmentInteractionListener {
+class GalleryActivity : AppCompatActivity(), ImageFragment.OnFragmentInteractionListener {
 
 
     private var galleryAdapter = GalleryAdapter(supportFragmentManager)
@@ -43,52 +46,42 @@ class GalleryActivity : AppCompatActivity() , ImageFragment.OnFragmentInteractio
         gallery_pager.adapter = galleryAdapter
         gallery_pager.addOnPageChangeListener(onPageChangeListener)
         gallery_pager.setPageTransformer(true, ZoomOutPagerTransformer())
-        galleryAdapter.widRate = 12f
-
         checkPermission()
     }
 
     private fun checkPermission() {
 
-        if(PermissionUtils.isGranted(PermissionConstants.STORAGE)){
-            initData()
-        }else{
-//            PermissionUtils.permission(PermissionConstants.STORAGE).callback(PermissionUtils.FullCallback{
-//
-//            }).request()
-        }
-
-        if (PermUtil.isSdGranted(this)) {
+        if (PermissionUtils.isGranted(PermissionConstants.STORAGE)) {
             initData()
         } else {
-            PermUtil.requestSDPermissions(this, PermUtil.SD_REQ)
+            PermissionUtils.permission(PermissionConstants.STORAGE).callback(object:PermissionUtils.SimpleCallback{
+                override fun onDenied() {
+                    finish()
+                }
+                override fun onGranted() {
+                    initData()
+                }
+            }).request()
         }
     }
 
-    private fun initData(){
+    private fun initData() {
         AsyncHandler.post(Runnable {
-                val uris = getImageUris(this)
-                runOnUiThread {
-                    galleryAdapter.setUris(uris)
-                    galleryAdapter.notifyDataSetChanged()
-                }
+            val uris = getImageUris(this)
+            runOnUiThread {
+                galleryAdapter.setUris(uris)
+                galleryAdapter.notifyDataSetChanged()
+            }
 
         })
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (PermUtil.isSdDenied(this)) {
-            finish()
-        }
-    }
-
     companion object {
-        fun getImageUris(context:Context):ArrayList<Uri>{
+        fun getImageUris(context: Context): ArrayList<Uri> {
 
             val imgUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            var cursor = context.contentResolver.query(imgUri,null,null,null,null)
+            var cursor = context.contentResolver.query(imgUri, null, null, null, null)
             var uris = ArrayList<Uri>()
 
             var mUri: Uri? = null

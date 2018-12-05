@@ -13,16 +13,7 @@ import joe.gallerydemo.fragments.ImageFragment
  */
 class GalleryAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
 
-    init {
 
-    }
-
-
-
-    var widRate :Float = 0.0f
-        set(value) {
-            field = value*2
-        }
     private var fragments:SparseArray<ImageFragment> = SparseArray()
 
     private var mUris: ArrayList<Uri> = ArrayList()

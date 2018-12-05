@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import joe.gallerydemo.util.PermUtil
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.PermissionUtils
 
 //import kotlinx.android.synthetic.main.activity_main.*
 
@@ -22,33 +23,31 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (PermUtil.isSdDenied(this)){
-            PermUtil.requestSD(this)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (PermUtil.isSdDenied(this)){
-            finish()
-        }
-    }
-
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when(item?.itemId){
-            R.id.gallery_menu -> startGallery()
+            R.id.gallery_menu -> checkPermission()
 
             R.id.picture_menu -> startPicture()
             else ->
                     print("nothing")
         }
 
-
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun checkPermission() {
+
+        if (PermissionUtils.isGranted(PermissionConstants.STORAGE)) {
+            startGallery()
+        } else {
+            PermissionUtils.permission(PermissionConstants.STORAGE).callback(object: PermissionUtils.SimpleCallback{
+                override fun onDenied() {}
+                override fun onGranted() {
+                    startGallery()
+                }
+            }).request()
+        }
     }
 
     private fun  startGallery(){

@@ -105,7 +105,7 @@ class ImageFragment : Fragment() {
          * @return A new instance of fragment ImageFragment.
          */
 
-        fun newInstance(position:Int,path: String, uri: Uri): ImageFragment {
+        fun newInstance(position:Int,path: String?, uri: Uri): ImageFragment {
             val fragment = ImageFragment()
             val args = Bundle()
             args.putInt(ARG_POSITION,position)
