@@ -14,6 +14,7 @@ class ZoomOutPagerTransformer : ViewPager.PageTransformer {
     }
 
 
+
     override fun transformPage(page: View, position: Float) {
         val pageWidth = page.width
         val pageHeight = page.height

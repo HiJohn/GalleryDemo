@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import joe.gallerydemo.R
-import joe.gallerydemo.R.id.image_see
+import joe.gallerydemo.glide.GlideApp
 import kotlinx.android.synthetic.main.fragment_image.*
 
 
@@ -22,8 +22,8 @@ import kotlinx.android.synthetic.main.fragment_image.*
  */
 class ImageFragment : Fragment() {
 
-    private var mPath: String? = null
-    private var mPosition: Int? = null
+    private var mPath: String? = ""
+    private var mPosition: Int =0
     private var mUri: Uri? = null
 
     private var mListener: OnFragmentInteractionListener? = null
@@ -48,9 +48,9 @@ class ImageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        Glide.with(this)
-//                .load(mUri)
-//                .into(image_see)
+        GlideApp.with(this)
+                .load(mUri)
+                .into(image_see)
     }
 
 

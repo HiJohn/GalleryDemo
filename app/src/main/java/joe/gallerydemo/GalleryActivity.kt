@@ -43,6 +43,7 @@ class GalleryActivity : AppCompatActivity() , ImageFragment.OnFragmentInteractio
         gallery_pager.adapter = galleryAdapter
         gallery_pager.addOnPageChangeListener(onPageChangeListener)
         gallery_pager.setPageTransformer(true, ZoomOutPagerTransformer())
+        galleryAdapter.widRate = 12f
 
         checkPermission()
     }
