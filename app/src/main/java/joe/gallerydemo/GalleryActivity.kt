@@ -2,10 +2,12 @@ package joe.gallerydemo
 
 import android.content.Context
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.viewpager.widget.ViewPager
+import android.support.v4.view.ViewPager
+import android.support.v7.app.AppCompatActivity
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.PermissionUtils
 import joe.gallerydemo.animator.ZoomOutPagerTransformer
 import joe.gallerydemo.fragments.ImageFragment
 import joe.gallerydemo.util.AsyncHandler
@@ -18,7 +20,7 @@ class GalleryActivity : AppCompatActivity() , ImageFragment.OnFragmentInteractio
     private var galleryAdapter = GalleryAdapter(supportFragmentManager)
 
 
-    private val onPageChangeListener = object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+    private val onPageChangeListener = object : ViewPager.OnPageChangeListener {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
         }
@@ -46,6 +48,15 @@ class GalleryActivity : AppCompatActivity() , ImageFragment.OnFragmentInteractio
     }
 
     private fun checkPermission() {
+
+        if(PermissionUtils.isGranted(PermissionConstants.STORAGE)){
+            initData()
+        }else{
+//            PermissionUtils.permission(PermissionConstants.STORAGE).callback(PermissionUtils.FullCallback{
+//
+//            }).request()
+        }
+
         if (PermUtil.isSdGranted(this)) {
             initData()
         } else {
@@ -96,8 +107,6 @@ class GalleryActivity : AppCompatActivity() , ImageFragment.OnFragmentInteractio
             return uris
         }
     }
-
-
 
 
     override fun onFragmentInteraction(uri: Uri) {

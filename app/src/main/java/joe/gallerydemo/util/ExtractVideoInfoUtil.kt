@@ -18,9 +18,6 @@ import java.util.HashSet
 object ExtractVideoInfoUtil {
 
 
-    val POSTFIX = ".jpeg"
-
-
     /**
      * 获取视频某一帧,不一定是关键帧，不耗时
      *
@@ -78,62 +75,6 @@ object ExtractVideoInfoUtil {
 
         return videoInfo
     }
-
-
-    fun getVideoInfoList(context: Context, callback: VideoInfoCallback) {
-        val videoItemHashSet = HashSet<VideoInfo>()
-        val mMetadataRetriever = MediaMetadataRetriever()
-        var videoInfo: VideoInfo
-        val cursor = context.contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null, null)
-        try {
-            if (cursor == null) {
-                callback.onFailure()
-                return
-            }
-            cursor.moveToFirst()
-            do {
-                videoInfo = VideoInfo()
-                videoInfo.path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA))
-                mMetadataRetriever.setDataSource(videoInfo.path)
-
-//                videoInfo.name = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME))
-                //                videoInfo.mime_type = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE));
-                //                videoInfo.width = Integer.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.WIDTH)));
-                //                videoInfo.height = Integer.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.HEIGHT)));
-                //                videoInfo.duration = Integer.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)));
-                val rotation = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION)
-                val width = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
-                val height = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
-                val duration = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-                val mimeType = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE)
-                val bitRate = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
-
-
-                videoInfo.bitrate = bitRate as Long
-
-                try {
-                    videoInfo.width = Integer.parseInt(width)
-                    videoInfo.height = Integer.parseInt(height)
-//                    videoInfo.duration = Integer.parseInt(duration)
-                    videoInfo.rotation = Integer.parseInt(rotation)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-                videoItemHashSet.add(videoInfo)
-            } while (cursor.moveToNext())
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            callback.onFailure()
-            return
-        } finally {
-            cursor?.close()
-        }
-        callback.onSuccess(ArrayList<VideoInfo>(videoItemHashSet))
-    }
-
-
 
 
     fun saveImage(bmp: Bitmap?, dirPath: String): String {
@@ -201,23 +142,5 @@ object ExtractVideoInfoUtil {
 
         return file.absolutePath
     }
-
-    fun deleteFile(f: File) {
-        if (f.isDirectory) {
-            val files = f.listFiles()
-            if (files != null && files.size > 0) {
-                for (i in files.indices) {
-                    deleteFile(files[i])
-                }
-            }
-        }
-        f.delete()
-    }
-
-    interface VideoInfoCallback {
-        fun onSuccess(videoInfos: ArrayList<VideoInfo>)
-        fun onFailure()
-    }
-
 
 }

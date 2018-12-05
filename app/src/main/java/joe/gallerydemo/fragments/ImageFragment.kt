@@ -3,12 +3,12 @@ package joe.gallerydemo.fragments
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import joe.gallerydemo.R
+import joe.gallerydemo.R.id.image_see
 import kotlinx.android.synthetic.main.fragment_image.*
 
 
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_image.*
  * Use the [ImageFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ImageFragment : androidx.fragment.app.Fragment() {
+class ImageFragment : Fragment() {
 
     private var mPath: String? = null
     private var mPosition: Int? = null
@@ -48,9 +48,9 @@ class ImageFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.with(this)
-                .load(mUri)
-                .into(image_see)
+//        Glide.with(this)
+//                .load(mUri)
+//                .into(image_see)
     }
 
 
@@ -58,6 +58,7 @@ class ImageFragment : androidx.fragment.app.Fragment() {
         if (mListener != null) {
             mListener!!.onFragmentInteraction(uri)
         }
+
     }
 
     override fun onAttach(context: Context) {

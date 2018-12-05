@@ -1,11 +1,11 @@
 package joe.gallerydemo
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import joe.gallerydemo.util.PermUtil
-import org.jetbrains.anko.startActivity
 
 //import kotlinx.android.synthetic.main.activity_main.*
 
@@ -52,9 +52,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun  startGallery(){
-//        startActivity(Intent(this,GalleryActivity::class.java))
-        startActivity<GalleryActivity>()
-
+        startActivity(Intent(this,GalleryActivity::class.java))
     }
 
     private fun startPicture(){
