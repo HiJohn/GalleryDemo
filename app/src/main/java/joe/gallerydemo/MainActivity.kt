@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
+import kotlinx.android.synthetic.main.activity_main.*
 
 //import kotlinx.android.synthetic.main.activity_main.*
 
@@ -15,6 +16,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        start_keep.setOnClickListener { startActivity(Intent(this,KeepLauncherActivity::class.java)) }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

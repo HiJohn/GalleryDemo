@@ -14,4 +14,36 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+
+    @Test
+    fun test2(){
+        var n = 10
+        for (i in 2..n){
+            print("i是：$i ")
+        }
+        for (i in 2 until n){
+            println("i value :$i")
+        }
+    }
+
+    @Test
+    fun test(){
+
+//        var mood = "I am sad "
+//        run{
+//            val mood = "I am happy"
+//            println(mood)
+//        }
+//        println(mood)
+
+
+        val filteredList = listOf(3,5,20,100,-25).filter(
+                fun(el):Boolean{
+                    return Math.abs(el)>20
+                })
+
+
+        print(filteredList.toString())
+    }
 }

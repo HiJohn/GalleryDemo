@@ -61,7 +61,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0"
 }
 
-kotlin{
+kotlin {
     experimental {
         coroutines 'enable'
     }
@@ -70,3 +70,4 @@ kotlin{
 //kapt {
 //    generateStubs = true
 //}
+
