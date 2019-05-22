@@ -3,8 +3,11 @@ package joe.gallerydemo.util
 
 
 
+
 fun main(){
     test()
+
+    println(3.triple())
 
 //    var result = {base:Int,exponent:Int->
 //        var result = 1
@@ -33,11 +36,20 @@ fun test(){
         })
 
 
-    print(filteredList.toString())
+    println(filteredList.toString())
 
 }
 
 
+fun Int.triple(): Int {
+    return this * 3
+}
+
+enum class Color(val color:Int){
+    RED(0XFF0000),
+    GREEN(0X00FF00),
+    BLUE(0X0000FF)
+}
 
 
 

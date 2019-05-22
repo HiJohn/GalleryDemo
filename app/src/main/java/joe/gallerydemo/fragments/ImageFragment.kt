@@ -3,10 +3,12 @@ package joe.gallerydemo.fragments
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import joe.gallerydemo.R
 import joe.gallerydemo.glide.GlideApp
 import kotlinx.android.synthetic.main.fragment_image.*
@@ -22,8 +24,8 @@ import kotlinx.android.synthetic.main.fragment_image.*
  */
 class ImageFragment : Fragment() {
 
-    private var mPath: String? = ""
-    private var mPosition: Int =0
+    private lateinit var mPath: String
+    private var mPosition: Int = 0
     private var mUri: Uri? = null
 
     private var mListener: OnFragmentInteractionListener? = null
@@ -32,8 +34,10 @@ class ImageFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        mPath = arguments?.getString(ARG_PATH,"").toString()
         if (arguments != null) {
-            mPath = arguments!!.getString(ARG_PATH)
+            mPath = arguments!!.getString(ARG_PATH,"")
             mUri = arguments!!.getParcelable(ARG_URI)
             mPosition = arguments!!.getInt(ARG_POSITION)
         }
@@ -48,9 +52,13 @@ class ImageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        GlideApp.with(this@ImageFragment)
-                .load(mUri)
-                .into(image_see)
+
+        image_see.loadImage(mUri,this@ImageFragment)
+
+
+//        GlideApp.with(this@ImageFragment)
+//                .load(mUri)
+//                .into(image_see)
     }
 
 
@@ -66,7 +74,7 @@ class ImageFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             mListener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 
@@ -116,3 +124,7 @@ class ImageFragment : Fragment() {
         }
     }
 }// Required empty public constructor
+
+private fun ImageView.loadImage(mUri: Uri?, context: ImageFragment) {
+    Glide.with(context).load(mUri).into(this)
+}
