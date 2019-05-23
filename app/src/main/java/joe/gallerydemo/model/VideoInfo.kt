@@ -2,30 +2,44 @@ package joe.gallerydemo.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.io.File
 
-data class VideoInfo(var path:String? = "",var rotation:Int=0,var width:Int=0,var height:Int=0,var duration:Long=0,var bitrate:Long=0) : Parcelable {
+data class VideoInfo(var path:String? = "") : Parcelable {
 
+    var displayName: String? = ""
+    var width:Int = 0
+    var height:Int = 0
+    var duration:Long = 0
+//    var file:File = File(path)
 
-    constructor(path: String?):this(
-
-    )
-
-    constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readLong(),
-            parcel.readLong())
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(path)
-        parcel.writeInt(rotation)
-        parcel.writeInt(width)
-        parcel.writeInt(height)
-        parcel.writeLong(duration)
-        parcel.writeLong(bitrate)
+    constructor( mPath:String,displayName: String,  width:Int,
+                 height:Int,duration:Long):this(mPath){
+        this.displayName = displayName
+        this.width = width
+        this.height = height
+        this.duration = duration
     }
+
+
+    constructor(parcel: Parcel) : this() {
+        path = parcel.readString()
+        displayName = parcel.readString()
+        width = parcel.readInt()
+        height = parcel.readInt()
+        duration = parcel.readLong()
+//        file = parcel.readSerializable() as File
+
+    }
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+
+        dest?.writeString(path)
+        dest?.writeString(displayName)
+        dest?.writeInt(width)
+        dest?.writeInt(height)
+        dest?.writeLong(duration)
+//        dest?.writeSerializable(file)
+    }
+
 
     override fun describeContents(): Int {
         return 0

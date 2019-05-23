@@ -62,11 +62,8 @@ object ExtractVideoInfoUtil {
         val bitRate = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
         val videoInfo = VideoInfo(filePath)
         videoInfo.path = filePath
-        videoInfo.bitrate = bitRate.toLong()
         try {
-            if (!TextUtils.isEmpty(rotation)) {
-                videoInfo.rotation = rotation.toInt()
-            }
+
             videoInfo.width = width.toInt()
             videoInfo.height = height.toInt()
             videoInfo.duration = duration.toLong()

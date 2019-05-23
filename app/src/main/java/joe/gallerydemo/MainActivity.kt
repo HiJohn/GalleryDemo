@@ -9,8 +9,6 @@ import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
-//import kotlinx.android.synthetic.main.activity_main.*
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         start_keep.setOnClickListener { startActivity(Intent(this,KeepLauncherActivity::class.java)) }
 
+        start_video_list.setOnClickListener{startActivity(Intent(this,VideoActivity::class.java))  }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

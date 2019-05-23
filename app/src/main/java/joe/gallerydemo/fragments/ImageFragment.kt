@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import joe.gallerydemo.R
 import joe.gallerydemo.glide.GlideApp
+import joe.gallerydemo.util.loadImage
 import kotlinx.android.synthetic.main.fragment_image.*
 
 
@@ -125,6 +126,3 @@ class ImageFragment : Fragment() {
     }
 }// Required empty public constructor
 
-private fun ImageView.loadImage(mUri: Uri?, context: ImageFragment) {
-    Glide.with(context).load(mUri).into(this)
-}

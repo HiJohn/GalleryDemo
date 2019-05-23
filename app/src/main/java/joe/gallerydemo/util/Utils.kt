@@ -29,6 +29,22 @@ fun test(){
 //        }
 //    }
 
+    var texts = "adfasdfad";
+
+    texts.let {
+
+    }
+
+    texts.apply {
+
+    }
+
+    texts.run {
+
+    }
+
+
+
 
     var filteredList = listOf(3,5,20,100,-25).filter(
         fun(el):Boolean{
