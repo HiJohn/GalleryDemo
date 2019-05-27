@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">GalleryDemo</string>
     <string name="gallery">gallery</string>
     <string name="picture">picture</string>
@@ -8,4 +8,12 @@
     <string name="tips">Click the menu item and show the Gallery </string>
 
     <string name="btnCapture">capture</string>
+
+    <!-- exoplayer start-->
+    <string name="error_generic">Playback failed</string>
+    <string name="error_no_decoder">This device does not provide a decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
+    <string name="error_no_secure_decoder">This device does not provide a secure decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
+    <string name="error_querying_decoders">Unable to query device decoders</string>
+    <string name="error_instantiating_decoder">Unable to instantiate decoder <xliff:g id="decoder_name">%1$s</xliff:g></string>
+    <!-- exoplayer end -->
 </resources>

@@ -1,4 +1,4 @@
-package joe.gallerydemo
+package joe.gallerydemo.activities
 
 import android.content.Context
 import android.net.Uri
@@ -7,11 +7,11 @@ import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.PermissionUtils
+import joe.gallerydemo.R
+import joe.gallerydemo.adapters.GalleryAdapter
 import joe.gallerydemo.animator.ZoomOutPagerTransformer
 import joe.gallerydemo.fragments.ImageFragment
-import joe.gallerydemo.util.AsyncHandler
 import joe.gallerydemo.util.RxAsync
 import kotlinx.android.synthetic.main.activity_gallery.*
 

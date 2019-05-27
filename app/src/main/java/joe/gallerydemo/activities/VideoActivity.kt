@@ -1,24 +1,22 @@
-package joe.gallerydemo
+package joe.gallerydemo.activities
 
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import joe.gallerydemo.R
+import joe.gallerydemo.adapters.VideoAdapter
+import joe.gallerydemo.interfaces.OnVideoItemClickListener
 import joe.gallerydemo.model.VideoInfo
-import joe.gallerydemo.util.AsyncHandler
 import joe.gallerydemo.util.RxAsync
-import joe.gallerydemo.util.RxAsync.launch
 import joe.gallerydemo.util.VideoStoreUtil
 import kotlinx.android.synthetic.main.activity_video.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
-class VideoActivity : AppCompatActivity() {
+class VideoActivity : AppCompatActivity() ,OnVideoItemClickListener {
 
 
     val videoAdapter = VideoAdapter()
@@ -40,6 +38,7 @@ class VideoActivity : AppCompatActivity() {
         })
         videoRv.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
         videoRv.adapter = videoAdapter
+        videoAdapter.onVideoItemClickListener = this
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            videoRv.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
 //
@@ -86,6 +85,12 @@ class VideoActivity : AppCompatActivity() {
 //        launch{
 //
 //        }
+    }
+
+    override fun onVideoItemClick(videoInfo: VideoInfo,uri: Uri) {
+        var i = Intent(this,ExoPlayerActivity::class.java)
+        i.putExtra("uri",uri)
+        startActivity(i)
     }
 
 }

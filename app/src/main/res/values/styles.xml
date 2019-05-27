@@ -17,4 +17,11 @@
         <item name="android:windowBackground">@color/black_overlay</item>
         <item name="android:colorBackground">@color/background_color</item>
     </style>
+    <style name="PlayerTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="PlayerTheme.Spherical">
+        <item name="surface_type">spherical_view</item>
+    </style>
 </resources>

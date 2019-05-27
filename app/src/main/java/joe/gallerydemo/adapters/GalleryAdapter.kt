@@ -1,17 +1,22 @@
-package joe.gallerydemo
+package joe.gallerydemo.adapters
 
 import android.net.Uri
 import android.util.SparseArray
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import joe.gallerydemo.fragments.ImageFragment
 
 /**
  * Created by takashi on 2018/2/24.
  */
-class GalleryAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
+class GalleryAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+//    override fun getItemCount(): Int {
+//        return mUris.size
+//    }
 
 
     private var fragments:SparseArray<ImageFragment> = SparseArray()

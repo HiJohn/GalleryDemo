@@ -7,6 +7,10 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
+import joe.gallerydemo.activities.GalleryActivity
+import joe.gallerydemo.activities.KeepLauncherActivity
+import joe.gallerydemo.activities.VerticalGalleryActivity
+import joe.gallerydemo.activities.VideoActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,9 +19,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        start_keep.setOnClickListener { startActivity(Intent(this,KeepLauncherActivity::class.java)) }
+        start_keep.setOnClickListener { startActivity(Intent(this, KeepLauncherActivity::class.java)) }
 
-        start_video_list.setOnClickListener{startActivity(Intent(this,VideoActivity::class.java))  }
+        start_video_list.setOnClickListener{startActivity(Intent(this, VideoActivity::class.java))  }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -31,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         when(item?.itemId){
             R.id.gallery_menu -> checkPermission()
 
-            R.id.picture_menu -> startPicture()
+            R.id.picture_menu -> startVertical()
             else ->
                     print("nothing")
         }
@@ -54,11 +58,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun  startGallery(){
-        startActivity(Intent(this,GalleryActivity::class.java))
+        startActivity(Intent(this, GalleryActivity::class.java))
     }
 
-    private fun startPicture(){
-//        startActivity<GalleryActivity>()
+    private fun startVertical(){
+        startActivity(Intent(this,VerticalGalleryActivity::class.java))
     }
 
 }

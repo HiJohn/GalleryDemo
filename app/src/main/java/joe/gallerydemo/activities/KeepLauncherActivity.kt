@@ -1,7 +1,8 @@
-package joe.gallerydemo
+package joe.gallerydemo.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import joe.gallerydemo.R
 
 class KeepLauncherActivity : AppCompatActivity() {
 

@@ -5,7 +5,7 @@
     android:id="@+id/picture_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="joe.gallerydemo.GalleryActivity">
+    tools:context="joe.gallerydemo.activities.GalleryActivity">
 
 
     <androidx.viewpager.widget.ViewPager

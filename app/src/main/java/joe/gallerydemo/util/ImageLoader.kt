@@ -8,11 +8,14 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestOptions
+import joe.gallerydemo.R
 import joe.gallerydemo.fragments.ImageFragment
 
 fun ImageView.loadImage(uri: Uri){
     Glide.with(this)
             .load(uri).transition(withCrossFade(300))
+            .placeholder(R.drawable.image_bg_default)
+            .fallback(R.drawable.image_bg_default)
             .apply(RequestOptions().skipMemoryCache(false).transform(MultiTransformation
             (CenterCrop(), RoundedCorners(4))))
             .into(this)
