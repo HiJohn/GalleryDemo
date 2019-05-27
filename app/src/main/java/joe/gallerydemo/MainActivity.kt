@@ -9,11 +9,16 @@ import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import joe.gallerydemo.activities.GalleryActivity
 import joe.gallerydemo.activities.KeepLauncherActivity
-import joe.gallerydemo.activities.VerticalGalleryActivity
 import joe.gallerydemo.activities.VideoActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+
+    companion object{
+        const val KEY_ORIENT:String = "orient"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         when(item?.itemId){
             R.id.gallery_menu -> checkPermission()
 
-            R.id.picture_menu -> startVertical()
+            R.id.picture_menu -> nothing()
             else ->
                     print("nothing")
         }
@@ -49,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             startGallery()
         } else {
             PermissionUtils.permission(PermissionConstants.STORAGE).callback(object: PermissionUtils.SimpleCallback{
-                override fun onDenied() {}
+                override fun onDenied() {finish()}
                 override fun onGranted() {
                     startGallery()
                 }
@@ -58,11 +63,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun  startGallery(){
-        startActivity(Intent(this, GalleryActivity::class.java))
+        val i  = Intent(this,GalleryActivity::class.java)
+        i.putExtra(KEY_ORIENT,orientation_vp.isChecked)
+
+        startActivity(i)
     }
 
-    private fun startVertical(){
-        startActivity(Intent(this,VerticalGalleryActivity::class.java))
+
+
+    private fun nothing(){
+
     }
 
 }

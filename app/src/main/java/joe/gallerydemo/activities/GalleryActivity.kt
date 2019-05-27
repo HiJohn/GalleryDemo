@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
+import joe.gallerydemo.MainActivity
 import joe.gallerydemo.R
 import joe.gallerydemo.adapters.GalleryAdapter
 import joe.gallerydemo.animator.ZoomOutPagerTransformer
@@ -15,22 +17,17 @@ import joe.gallerydemo.fragments.ImageFragment
 import joe.gallerydemo.util.RxAsync
 import kotlinx.android.synthetic.main.activity_gallery.*
 
-class GalleryActivity : AppCompatActivity(), ImageFragment.OnFragmentInteractionListener {
+class GalleryActivity : AppCompatActivity(){
 
 
-    private var galleryAdapter = GalleryAdapter(supportFragmentManager)
+    private var galleryAdapter = GalleryAdapter(this)
 
-
-    private val onPageChangeListener = object : ViewPager.OnPageChangeListener {
-        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-        }
-
-        override fun onPageSelected(position: Int) {
-            // ……
-        }
-
-        override fun onPageScrollStateChanged(state: Int) {
+    private val mAnimator = ViewPager2.PageTransformer { page, position ->
+        val absPos = Math.abs(position)
+        page.apply {
+            val scale = if (absPos > 1) 0F else 1 - absPos
+            scaleX = scale
+            scaleY = scale
 
         }
     }
@@ -40,28 +37,15 @@ class GalleryActivity : AppCompatActivity(), ImageFragment.OnFragmentInteraction
         setContentView(R.layout.activity_gallery)
         actionBar?.hide()
 
-//        gallery_pager = findViewById(R.id.gallery_pager)
+        val orient = intent.getBooleanExtra(MainActivity.KEY_ORIENT,true)
+
         gallery_pager.adapter = galleryAdapter
-        gallery_pager.addOnPageChangeListener(onPageChangeListener)
-        gallery_pager.setPageTransformer(true, ZoomOutPagerTransformer())
-        checkPermission()
+        gallery_pager.orientation = if (orient) ViewPager2.ORIENTATION_HORIZONTAL else ViewPager2.ORIENTATION_VERTICAL
+        gallery_pager.setPageTransformer(mAnimator)
+
+        initData()
     }
 
-    private fun checkPermission() {
-
-        if (PermissionUtils.isGranted(PermissionConstants.STORAGE)) {
-            initData()
-        } else {
-            PermissionUtils.permission(PermissionConstants.STORAGE).callback(object:PermissionUtils.SimpleCallback{
-                override fun onDenied() {
-                    finish()
-                }
-                override fun onGranted() {
-                    initData()
-                }
-            }).request()
-        }
-    }
 
     private fun initData() {
 
@@ -71,7 +55,7 @@ class GalleryActivity : AppCompatActivity(), ImageFragment.OnFragmentInteraction
             }
 
             override fun onResult(t: ArrayList<Uri>) {
-                galleryAdapter.setUris(t)
+                galleryAdapter.mUris = t
                 galleryAdapter.notifyDataSetChanged()
             }
 
@@ -80,14 +64,6 @@ class GalleryActivity : AppCompatActivity(), ImageFragment.OnFragmentInteraction
             }
         })
 
-
-//        AsyncHandler.post(Runnable {
-//            val uris = getImageUris(this@GalleryActivity)
-//            runOnUiThread {
-//                galleryAdapter.setUris(uris)
-//                galleryAdapter.notifyDataSetChanged()
-//            }
-//        })
     }
 
 
@@ -114,11 +90,6 @@ class GalleryActivity : AppCompatActivity(), ImageFragment.OnFragmentInteraction
             }
             return uris
         }
-    }
-
-
-    override fun onFragmentInteraction(uri: Uri) {
-
     }
 
 }
