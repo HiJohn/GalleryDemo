@@ -3,8 +3,10 @@ package joe.gallerydemo.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
+import com.blankj.utilcode.util.LogUtils
 import joe.gallerydemo.R
 import joe.gallerydemo.adapters.VideoPlayAdapter
+import joe.gallerydemo.fragments.VideoPlayFragment
 import joe.gallerydemo.model.VideoInfo
 import joe.gallerydemo.util.RxAsync
 import joe.gallerydemo.util.VideoStoreUtil
@@ -17,36 +19,40 @@ class VideoPlayListActivity : AppCompatActivity() {
 
     lateinit var adapter: VideoPlayAdapter
 
+//    lateinit var fragment: VideoPlayFragment
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_play_list)
         adapter = VideoPlayAdapter(this)
+
         video_list_vp2.adapter = adapter
 
-        video_list_vp2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-
-            var curPos = 0
-
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-                if (state== ViewPager2.SCROLL_STATE_IDLE){
-
-                }
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                curPos = position
-            }
-
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-            }
-        })
+//        video_list_vp2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//
+//
+//            override fun onPageScrollStateChanged(state: Int) {
+//                super.onPageScrollStateChanged(state)
+//            }
+//
+//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+//
+//            }
+//
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//            }
+//        })
 
         initData()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+    }
 
     private fun initData(){
         RxAsync.async(object: RxAsync.RxCallBack<ArrayList<VideoInfo>>{
@@ -63,5 +69,15 @@ class VideoPlayListActivity : AppCompatActivity() {
 
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        video_list_vp2.unregisterOnPageChangeCallback()
     }
 }

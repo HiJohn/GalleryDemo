@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.blankj.utilcode.util.LogUtils
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackPreparer
@@ -22,12 +23,17 @@ import joe.gallerydemo.model.VideoInfo
 import kotlinx.android.synthetic.main.item_exoplayer.*
 import java.io.File
 
+
+//FIXME can`t stop player when vertical scrolled out
 class VideoPlayFragment : Fragment() ,PlaybackPreparer{
     override fun preparePlayback() {
         player.retry()
     }
 
+    private val TAG:String = "VideoPlayFragment"
+
     private lateinit var videoInfo :VideoInfo
+    private var position: Int = 0
     private lateinit var mediaSource: ProgressiveMediaSource
     lateinit var player: SimpleExoPlayer
     lateinit var app: GalleryApp
@@ -39,6 +45,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
 
         arguments?.let {
             videoInfo = it.getParcelable(ARG_VIDEO_INFO)?: VideoInfo()
+            position = it.getInt(ARG_VIDEO_POSITION,0)
         }
     }
 
@@ -53,6 +60,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
         val renderersFactory = DefaultRenderersFactory(this.context)
         val trackSelectionFactory = RandomTrackSelection.Factory()
         val trackSelector = DefaultTrackSelector(trackSelectionFactory)
+
         player = ExoPlayerFactory.newSimpleInstance(
                 this.context, renderersFactory, trackSelector)
         player.playWhenReady  = true
@@ -87,6 +95,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
 
     override fun onPause() {
         super.onPause()
+        LogUtils.i(TAG," on Pause ")
         if (Util.SDK_INT <= 23) {
             exoplayer_view.onPause()
             releasePlayer()
@@ -112,17 +121,33 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
         }
     }
 
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        LogUtils.i(TAG,"onHiddenChanged: $hidden, position:$position")
+    }
+
     //===================================================================================
 
     companion object {
 
         const val ARG_VIDEO_INFO  = "video_info"
+        const val ARG_VIDEO_POSITION  = "video_pos"
 
         @JvmStatic
         fun newInstance(videoInfo: VideoInfo) =
                 VideoPlayFragment().apply {
                     arguments = Bundle().apply {
                         putParcelable(ARG_VIDEO_INFO, videoInfo)
+                    }
+                }
+
+        @JvmStatic
+        fun newInstance(videoInfo: VideoInfo,position:Int) =
+                VideoPlayFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable(ARG_VIDEO_INFO, videoInfo)
+                        putInt(ARG_VIDEO_POSITION,position)
                     }
                 }
     }

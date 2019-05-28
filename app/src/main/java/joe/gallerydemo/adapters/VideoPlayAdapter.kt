@@ -1,5 +1,6 @@
 package joe.gallerydemo.adapters
 
+import android.util.SparseArray
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -12,13 +13,24 @@ class VideoPlayAdapter (fa:FragmentActivity): FragmentStateAdapter(fa) {
 
     var videoList:ArrayList<VideoInfo> = ArrayList()
 
+//    var map:SparseArray<VideoPlayFragment> = SparseArray()
+
     override fun getItem(position: Int): Fragment {
         val videoInfo = videoList[position]
-        return VideoPlayFragment.newInstance(videoInfo)
+//        var fragment = map[position]
+//        if (fragment==null){
+//            fragment = VideoPlayFragment.newInstance(videoInfo,position)
+//            map.put(position,fragment)
+//        }
+//        return fragment
+
+        return VideoPlayFragment.newInstance(videoInfo,position)
     }
 
     override fun getItemCount(): Int {
         return videoList.size
     }
+
+
 
 }
