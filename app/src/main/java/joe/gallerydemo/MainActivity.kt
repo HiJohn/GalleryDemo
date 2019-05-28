@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.PermissionUtils
 import joe.gallerydemo.activities.GalleryActivity
 import joe.gallerydemo.activities.KeepLauncherActivity
 import joe.gallerydemo.activities.VideoActivity
+import joe.gallerydemo.activities.VideoPlayListActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         when(item?.itemId){
             R.id.gallery_menu -> checkPermission()
 
-            R.id.picture_menu -> nothing()
+            R.id.picture_menu -> startVideoPlayList()
             else ->
                     print("nothing")
         }
@@ -71,8 +72,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private fun nothing(){
-
+    private fun startVideoPlayList(){
+        startActivity(Intent(this,VideoPlayListActivity::class.java))
     }
 
 }

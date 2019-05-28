@@ -48,15 +48,6 @@ class ImageFragment : Fragment() {
         private val ARG_URI = "uri"
         private val ARG_POSITION = "position"
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param path
-         * @param uri uri of this picture
-         * @param position
-         * @return A new instance of fragment ImageFragment.
-         */
 
         fun newInstance(position:Int,path: String?, uri: Uri): ImageFragment {
             val fragment = ImageFragment()

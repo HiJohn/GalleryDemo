@@ -76,7 +76,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
         initIntent()
 
         initPlayerView()
-        initPlayer()
+//        initPlayer()
 
 
         restoreInstanceState(savedInstanceState)
@@ -179,7 +179,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
             C.TYPE_DASH -> DashMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
             C.TYPE_SS -> SsMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
             C.TYPE_HLS -> HlsMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
-            C.TYPE_OTHER -> ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
+            C.TYPE_OTHER -> {ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)}
             else -> throw IllegalStateException("Unsupported type: $type")
         }
     }

@@ -28,6 +28,23 @@ class ExampleUnitTest {
     }
 
     @Test
+    fun testPerson(){
+        var p = Person()
+        var a = ""
+        var b = p.let {
+            a = it.name
+            it.name = "aaaaa"
+        }
+
+        println("a:$a")
+        println("name:${p.name}")
+    }
+
+    class Person{
+        var name = "barry"
+    }
+
+    @Test
     fun test(){
 
 //        var mood = "I am sad "

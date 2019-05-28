@@ -17,7 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.VideoPlayListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/PicFullScreen">
 
+        </activity>
         <activity
             android:name=".activities.ExoPlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
@@ -25,6 +29,7 @@
             android:theme="@style/PlayerTheme">
             <intent-filter>
                 <action android:name="com.google.android.exoplayer.demo.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:scheme="http" />
@@ -35,6 +40,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="com.google.android.exoplayer.demo.action.VIEW_LIST" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
