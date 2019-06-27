@@ -4,6 +4,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlin.math.abs
 
 
 fun main(){
@@ -43,7 +44,7 @@ fun test(){
 //        }
 //    }
 
-    var texts = "adfasdfad";
+    var texts = "adfasdfad"
 
     texts.let {
 
@@ -60,7 +61,7 @@ fun test(){
 
     var filteredList = listOf(3,5,20,100,-25).filter(
         fun(el):Boolean{
-            return Math.abs(el)>20
+            return abs(el) >20
         })
 
 

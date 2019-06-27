@@ -61,7 +61,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
         return view
     }
 
-    fun initPlayer(){
+    private fun initPlayer(){
         val renderersFactory = DefaultRenderersFactory(this.context)
         val trackSelectionFactory = RandomTrackSelection.Factory()
         val trackSelector = DefaultTrackSelector(trackSelectionFactory)
@@ -113,10 +113,6 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
             exoplayer_view.onPause()
             releasePlayer()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 
 
