@@ -1,13 +1,16 @@
 package joe.gallerydemo.util
 
-
-
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
 fun main(){
-    test()
+//    test()
+    coroutinesTest()
 
-    println(3.triple())
+//    println(3.triple())
 
 //    var result = {base:Int,exponent:Int->
 //        var result = 1
@@ -20,6 +23,17 @@ fun main(){
 //    print(result)
 }
 
+
+fun coroutinesTest(){
+    GlobalScope.launch {
+        delay(1000)
+        println(" coroutines !")
+    }
+    println(" hello ,")
+    runBlocking {
+        delay(2000)
+    }
+}
 
 fun test(){
 
@@ -42,8 +56,6 @@ fun test(){
     texts.run {
 
     }
-
-
 
 
     var filteredList = listOf(3,5,20,100,-25).filter(
@@ -70,9 +82,6 @@ enum class Color(val color:Int){
 
 
 class Utils {
-
-
-
 
 
     fun getMathFunc(type:String):(Int)->Int{

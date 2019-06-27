@@ -23,14 +23,14 @@ import joe.gallerydemo.model.VideoInfo
 import kotlinx.android.synthetic.main.item_exoplayer.*
 import java.io.File
 
-
+const val TAG:String = "VideoPlayFragment"
 //FIXME can`t stop player when vertical scrolled out
 class VideoPlayFragment : Fragment() ,PlaybackPreparer{
     override fun preparePlayback() {
         player.retry()
     }
 
-    private val TAG:String = "VideoPlayFragment"
+//    private val TAG:String = "VideoPlayFragment"
 
     private lateinit var videoInfo :VideoInfo
     private var position: Int = 0
@@ -43,10 +43,15 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
 
         app = this.context?.applicationContext as GalleryApp
 
-        arguments?.let {
-            videoInfo = it.getParcelable(ARG_VIDEO_INFO)?: VideoInfo()
-            position = it.getInt(ARG_VIDEO_POSITION,0)
+        arguments?.apply {
+            videoInfo =this.getParcelable<VideoInfo>(ARG_VIDEO_INFO)?:VideoInfo()
+            position = this.getInt(ARG_VIDEO_POSITION,0)
         }
+
+//        arguments?.let {
+//            videoInfo = it.getParcelable(ARG_VIDEO_INFO)?: VideoInfo()
+//            position = it.getInt(ARG_VIDEO_POSITION,0)
+//        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
