@@ -18,18 +18,15 @@ class ImageFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        mPath = arguments?.getString(ARG_PATH,"").toString()
-        if (arguments != null) {
-            mPath = arguments!!.getString(ARG_PATH,"")
-            mUri = arguments!!.getParcelable(ARG_URI)
-            mPosition = arguments!!.getInt(ARG_POSITION)
+        arguments?.apply {
+            mPath = this.getString(ARG_PATH, "")
+            mUri = this.getParcelable(ARG_URI)
+            mPosition = this.getInt(ARG_POSITION)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_image, container, false)
     }
 
@@ -37,22 +34,22 @@ class ImageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        image_see.loadImage(mUri,this@ImageFragment)
+        image_see.loadImage(mUri, this@ImageFragment)
 
     }
 
 
     companion object {
 
-        private val ARG_PATH = "path"
-        private val ARG_URI = "uri"
-        private val ARG_POSITION = "position"
+        private const val ARG_PATH = "path"
+        private const val ARG_URI = "uri"
+        private const val ARG_POSITION = "position"
 
 
-        fun newInstance(position:Int,path: String?, uri: Uri): ImageFragment {
+        fun newInstance(position: Int, path: String?, uri: Uri): ImageFragment {
             val fragment = ImageFragment()
             val args = Bundle()
-            args.putInt(ARG_POSITION,position)
+            args.putInt(ARG_POSITION, position)
             args.putString(ARG_PATH, path)
             args.putParcelable(ARG_URI, uri)
             fragment.arguments = args

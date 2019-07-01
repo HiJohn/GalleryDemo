@@ -1,15 +1,13 @@
 package joe.gallerydemo.util
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlin.math.abs
 
 
 fun main(){
 //    test()
-    coroutinesTest()
+//    coroutinesTest()
+    scopeTest()
 
 //    println(3.triple())
 
@@ -25,15 +23,37 @@ fun main(){
 }
 
 
-fun coroutinesTest(){
-    GlobalScope.launch {
+fun coroutinesTest() = runBlocking{
+    launch {
         delay(1000)
         println(" coroutines !")
     }
     println(" hello ,")
-    runBlocking {
-        delay(2000)
+//    job.join()
+}
+
+
+fun scopeTest() = runBlocking {
+    launch {
+        delay(200)
+        println("Task from blocking ")
+
     }
+
+    coroutineScope{
+        launch {
+            delay(500)
+            println(" Task from nested launch ")
+        }
+
+        delay(100)
+        println("Task from coroutine Scope")
+
+    }
+
+    println(" Coroutine scope is over ")
+
+
 }
 
 fun test(){
@@ -47,15 +67,18 @@ fun test(){
     var texts = "adfasdfad"
 
     texts.let {
-
+        //传入texts 返回一个block的值
     }
 
     texts.apply {
+        //builder
+        texts.plus("aa")
 
     }
 
     texts.run {
-
+        val a = texts.length
+        a
     }
 
 
