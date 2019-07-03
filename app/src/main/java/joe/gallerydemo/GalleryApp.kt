@@ -10,12 +10,9 @@ import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.upstream.cache.*
 import java.io.File
-
+const val DOWNLOAD_CONTENT_DIRECTORY = "downloads"
 class GalleryApp :Application() {
 
-
-
-    private val DOWNLOAD_CONTENT_DIRECTORY = "downloads"
 
     private lateinit var databaseProvider:DatabaseProvider
     private lateinit var downloadContentDirectory:File
@@ -29,7 +26,7 @@ class GalleryApp :Application() {
         return buildReadOnlyCacheDataSource(upstreamFactory, downloadCache)
     }
 
-    fun buildReadOnlyCacheDataSource(
+    private fun buildReadOnlyCacheDataSource(
             upstreamFactory: DataSource.Factory, cache: Cache): CacheDataSourceFactory {
         return CacheDataSourceFactory(
                 cache,

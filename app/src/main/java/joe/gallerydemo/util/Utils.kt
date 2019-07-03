@@ -82,6 +82,18 @@ fun test(){
     }
 
 
+    texts.map {
+        texts.length
+    }
+
+    texts.flatMap {
+
+    }
+
+
+    var p = Person()
+
+
     var filteredList = listOf(3,5,20,100,-25).filter(
         fun(el):Boolean{
             return abs(el) >20
@@ -103,7 +115,9 @@ enum class Color(val color:Int){
     BLUE(0X0000FF)
 }
 
+class Person(var name:String= "curry",var age:Int = 30){
 
+}
 
 class Utils {
 

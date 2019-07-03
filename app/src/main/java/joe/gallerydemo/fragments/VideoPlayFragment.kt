@@ -35,7 +35,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
     private lateinit var videoInfo :VideoInfo
     private var position: Int = 0
     private lateinit var mediaSource: ProgressiveMediaSource
-    lateinit var player: SimpleExoPlayer
+    private lateinit var player: SimpleExoPlayer
     lateinit var app: GalleryApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,9 +56,8 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.item_exoplayer, container, false)
 
-        return view
+        return inflater.inflate(R.layout.item_exoplayer, container, false)
     }
 
     private fun initPlayer(){
@@ -116,10 +115,8 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
     }
 
 
-    fun releasePlayer() {
-        if (player != null) {
-            player.release()
-        }
+    private fun releasePlayer() {
+        player.release()
     }
 
 
