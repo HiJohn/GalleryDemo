@@ -9,6 +9,7 @@ import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.upstream.cache.*
+import leakcanary.LeakSentry
 import java.io.File
 const val DOWNLOAD_CONTENT_DIRECTORY = "downloads"
 class GalleryApp :Application() {
@@ -16,25 +17,13 @@ class GalleryApp :Application() {
 
     private lateinit var databaseProvider:DatabaseProvider
     private lateinit var downloadContentDirectory:File
-
+    lateinit var cacheDataSourceFactory: CacheDataSourceFactory
+    private lateinit var upstreamFactory: DefaultDataSourceFactory
+    private lateinit var httpDataSourceFactory: DefaultHttpDataSourceFactory
     private lateinit var downloadCache: Cache
 
     lateinit var userAgent:String
 
-    fun buildDataSourceFactory(): DataSource.Factory {
-        val upstreamFactory = DefaultDataSourceFactory(this, buildHttpDataSourceFactory())
-        return buildReadOnlyCacheDataSource(upstreamFactory, downloadCache)
-    }
-
-    private fun buildReadOnlyCacheDataSource(
-            upstreamFactory: DataSource.Factory, cache: Cache): CacheDataSourceFactory {
-        return CacheDataSourceFactory(
-                cache,
-                upstreamFactory,
-                FileDataSourceFactory(),
-                /* eventListener= */ null,
-                CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR, null)/* cacheWriteDataSinkFactory= */
-    }
 
     private fun getUserAgent(context: Context, applicationName: String): String {
         val versionName: String
@@ -57,6 +46,8 @@ class GalleryApp :Application() {
 
     override fun onCreate() {
         super.onCreate()
+        LeakSentry.config = LeakSentry.config.copy(watchFragmentViews = true,watchActivities =
+        true,watchFragments = true)
         init()
     }
 
@@ -66,6 +57,14 @@ class GalleryApp :Application() {
         downloadContentDirectory = File(filesDir, DOWNLOAD_CONTENT_DIRECTORY)
         downloadCache = SimpleCache(downloadContentDirectory, NoOpCacheEvictor(), databaseProvider)
         userAgent = getUserAgent(this,"exoPlayerDemo")
+        httpDataSourceFactory = DefaultHttpDataSourceFactory(userAgent)
+        upstreamFactory = DefaultDataSourceFactory(this, buildHttpDataSourceFactory())
+        cacheDataSourceFactory = CacheDataSourceFactory(
+                downloadCache,
+                upstreamFactory,
+                FileDataSourceFactory(),
+                /* eventListener= */ null,
+                CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR, null)
     }
 
 }

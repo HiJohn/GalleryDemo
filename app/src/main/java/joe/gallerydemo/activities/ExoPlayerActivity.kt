@@ -21,11 +21,13 @@ import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
 import com.google.android.exoplayer2.trackselection.*
 import com.google.android.exoplayer2.ui.PlayerControlView
 import com.google.android.exoplayer2.upstream.*
+import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
 import com.google.android.exoplayer2.util.ErrorMessageProvider
 import com.google.android.exoplayer2.util.Util
 import joe.gallerydemo.GalleryApp
 import joe.gallerydemo.R
 import kotlinx.android.synthetic.main.activity_exoplayer.*
+import leakcanary.LeakSentry
 import java.net.CookieHandler
 import java.net.CookieManager
 import java.net.CookiePolicy
@@ -62,7 +64,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
     private var startPosition: Long = 0
     lateinit var player: SimpleExoPlayer
     lateinit var uri: Uri
-    lateinit var dataSourceFactory: DataSource.Factory
+    lateinit var dataSourceFactory: CacheDataSourceFactory
     lateinit var mediaSource: MediaSource
     lateinit var trackSelector: DefaultTrackSelector
     lateinit var trackSelectorParameters: DefaultTrackSelector.Parameters
@@ -111,7 +113,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
         }
 
 
-        dataSourceFactory = app.buildDataSourceFactory()
+        dataSourceFactory = app.cacheDataSourceFactory
         mediaSource = buildMediaSource(uri, null)
     }
 
@@ -144,6 +146,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
         player.addListener(PlayerEventListener())
 //        player.addAnalyticsListener(EventLogger(trackSelector))
         player.playWhenReady = true
+        player.repeatMode = Player.REPEAT_MODE_ONE
         player_view.player = player
         player_view.setPlaybackPreparer(this)
 
@@ -231,6 +234,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
     override fun onDestroy() {
         super.onDestroy()
         player_view.overlayFrameLayout?.removeAllViews()
+        LeakSentry.refWatcher.watch(this)
     }
 
 
@@ -270,6 +274,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
         if (player != null) {
             updateTrackSelectorParameters()
             updateStartPosition()
+            player.clearVideoSurface()
             player.release()
         }
     }
@@ -336,5 +341,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
             return Pair.create(0, errorString)
         }
     }
+
+
 
 }

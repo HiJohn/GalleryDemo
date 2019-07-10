@@ -30,15 +30,6 @@ class VideoPlayAdapter2 :RecyclerView.Adapter<VideoPlayAdapter2.VideoHolder>() {
 
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-    }
-
-    override fun onViewRecycled(holder: VideoHolder) {
-        super.onViewRecycled(holder)
-        
-    }
-
 
 
 

@@ -2,6 +2,9 @@ package joe.gallerydemo.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.Player.*
+import com.google.android.exoplayer2.SimpleExoPlayer
 import joe.gallerydemo.R
 import joe.gallerydemo.adapters.VideoPlayAdapter
 import joe.gallerydemo.model.VideoInfo
@@ -13,16 +16,24 @@ class VideoPlayListActivity : AppCompatActivity() {
 
     lateinit var adapter: VideoPlayAdapter
 
+    lateinit var player:SimpleExoPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_play_list)
         adapter = VideoPlayAdapter(this)
 
         video_list_vp2.adapter = adapter
-
+        initPlayer()
         initData()
     }
 
+
+    private fun initPlayer(){
+        player = ExoPlayerFactory.newSimpleInstance(this)
+        player.repeatMode = REPEAT_MODE_ALL
+
+    }
 
     private fun initData(){
         RxAsync.async(object: RxAsync.RxCallBack<ArrayList<VideoInfo>>{

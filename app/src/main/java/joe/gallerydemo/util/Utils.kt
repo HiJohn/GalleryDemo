@@ -86,9 +86,9 @@ fun test(){
         texts.length
     }
 
-    texts.flatMap {
-
-    }
+//    texts.flatMap {
+//
+//    }
 
 
     var p = Person()

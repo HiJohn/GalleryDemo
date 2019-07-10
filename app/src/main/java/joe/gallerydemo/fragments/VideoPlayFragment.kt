@@ -1,5 +1,6 @@
 package joe.gallerydemo.fragments
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -18,9 +19,11 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import joe.gallerydemo.GalleryApp
 import joe.gallerydemo.R
+import joe.gallerydemo.activities.VideoPlayListActivity
 
 import joe.gallerydemo.model.VideoInfo
 import kotlinx.android.synthetic.main.item_exoplayer.*
+import leakcanary.LeakSentry
 import java.io.File
 
 const val TAG:String = "VideoPlayFragment"
@@ -36,6 +39,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
     private var position: Int = 0
     private lateinit var mediaSource: ProgressiveMediaSource
     private lateinit var player: SimpleExoPlayer
+    private lateinit var activity: VideoPlayListActivity
     lateinit var app: GalleryApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +52,13 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
             position = this.getInt(ARG_VIDEO_POSITION,0)
         }
 
-//        arguments?.let {
-//            videoInfo = it.getParcelable(ARG_VIDEO_INFO)?: VideoInfo()
-//            position = it.getInt(ARG_VIDEO_POSITION,0)
-//        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is VideoPlayListActivity){
+            activity = context
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -61,21 +68,23 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
     }
 
     private fun initPlayer(){
-        val renderersFactory = DefaultRenderersFactory(this.context)
-        val trackSelectionFactory = RandomTrackSelection.Factory()
-        val trackSelector = DefaultTrackSelector(trackSelectionFactory)
 
-        player = ExoPlayerFactory.newSimpleInstance(
-                this.context, renderersFactory, trackSelector)
-        player.playWhenReady  = true
+        player = activity.player;
 
-        val uri = Uri.fromFile(File(videoInfo.path))
-        val dataSourceFactory = DefaultDataSourceFactory(this.context,app.userAgent)
-        mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
+        val uri = Uri.parse(videoInfo.path)
+        mediaSource = ProgressiveMediaSource.Factory(app.cacheDataSourceFactory).createMediaSource(uri)
         exoplayer_view.player = player
         exoplayer_view.requestFocus()
 
         player.prepare(mediaSource)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
     }
 
 
@@ -116,9 +125,15 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
 
 
     private fun releasePlayer() {
-        player.release()
+        player.playWhenReady = false
+        exoplayer_view.player = null
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LeakSentry.refWatcher.watch(this)
+    }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)

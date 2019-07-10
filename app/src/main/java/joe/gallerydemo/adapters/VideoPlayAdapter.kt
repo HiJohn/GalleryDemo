@@ -6,11 +6,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import joe.gallerydemo.fragments.VideoPlayFragment
 import joe.gallerydemo.model.VideoInfo
 
-class VideoPlayAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+class VideoPlayAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa){
+
+
     override fun createFragment(position: Int): Fragment {
         val videoInfo = videoList[position]
         return VideoPlayFragment.newInstance(videoInfo, position)
     }
+
 
     var videoList: ArrayList<VideoInfo> = ArrayList()
 
