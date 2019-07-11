@@ -22,6 +22,7 @@ import joe.gallerydemo.R
 import joe.gallerydemo.activities.VideoPlayListActivity
 
 import joe.gallerydemo.model.VideoInfo
+import joe.gallerydemo.util.ExoplayerPool
 import kotlinx.android.synthetic.main.item_exoplayer.*
 import leakcanary.LeakSentry
 import java.io.File
@@ -69,23 +70,17 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
 
     private fun initPlayer(){
 
-        player = activity.player;
-
+        player = activity.player
+        player.playWhenReady = true
         val uri = Uri.parse(videoInfo.path)
         mediaSource = ProgressiveMediaSource.Factory(app.cacheDataSourceFactory).createMediaSource(uri)
         exoplayer_view.player = player
+
         exoplayer_view.requestFocus()
 
         player.prepare(mediaSource)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-    }
 
 
     //===================================================================================
@@ -108,7 +103,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
 
     override fun onPause() {
         super.onPause()
-        LogUtils.i(TAG," on Pause ")
+//        LogUtils.i(TAG," on Pause ")
         if (Util.SDK_INT <= 23) {
             exoplayer_view.onPause()
             releasePlayer()
@@ -135,10 +130,10 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
         LeakSentry.refWatcher.watch(this)
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        LogUtils.i(TAG,"onHiddenChanged: $hidden, position:$position")
-    }
+//    override fun onHiddenChanged(hidden: Boolean) {
+//        super.onHiddenChanged(hidden)
+//        LogUtils.i(TAG,"onHiddenChanged: $hidden, position:$position")
+//    }
 
     //===================================================================================
 

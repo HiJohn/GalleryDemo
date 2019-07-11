@@ -2,6 +2,7 @@ package joe.gallerydemo.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -24,7 +25,20 @@ class VideoPlayListActivity : AppCompatActivity() {
         adapter = VideoPlayAdapter(this)
 
         video_list_vp2.adapter = adapter
+//        video_list_vp2.offscreenPageLimit = 5
+//        video_list_vp2.registerOnPageChangeCallback(object :ViewPager2.OnPageChangeCallback(){
+//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+//                player.playWhenReady = false
+//            }
+//
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                player.playWhenReady = true
+//            }
+//        })
         initPlayer()
+
         initData()
     }
 
@@ -50,4 +64,9 @@ class VideoPlayListActivity : AppCompatActivity() {
         })
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player.release()
+    }
 }

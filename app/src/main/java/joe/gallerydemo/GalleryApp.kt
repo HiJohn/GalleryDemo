@@ -2,7 +2,7 @@ package joe.gallerydemo
 
 import android.app.Application
 import android.content.Context
-import android.content.pm.PackageManager
+import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Build
 import com.google.android.exoplayer2.ExoPlayerLibraryInfo
 import com.google.android.exoplayer2.database.DatabaseProvider
@@ -31,7 +31,7 @@ class GalleryApp :Application() {
             val packageName = context.packageName
             val info = context.packageManager.getPackageInfo(packageName, 0)
             info.versionName
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (e: NameNotFoundException) {
             "?"
         }
 
