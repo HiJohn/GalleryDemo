@@ -14,10 +14,22 @@ import joe.gallerydemo.fragments.ImageFragment
 fun ImageView.loadImage(uri: Uri){
     Glide.with(this)
             .load(uri).transition(withCrossFade(300))
-            .placeholder(R.drawable.image_bg_default)
-            .fallback(R.drawable.image_bg_default)
+            .placeholder(R.drawable.transparent)
+            .fallback(R.drawable.transparent)
+            .transition(withCrossFade(300))
             .apply(RequestOptions().skipMemoryCache(false).transform(MultiTransformation
             (CenterCrop(), RoundedCorners(4))))
+            .into(this)
+}
+
+fun ImageView.loadImageCenterCrop(uri: Uri){
+    Glide.with(this)
+            .load(uri).transition(withCrossFade(300))
+            .placeholder(R.drawable.transparent)
+            .fallback(R.drawable.image_bg_default)
+            .transition(withCrossFade(300))
+            .centerCrop()
+//            .fitCenter()
             .into(this)
 }
 

@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import joe.gallerydemo.R
 import joe.gallerydemo.util.loadImage
+import joe.gallerydemo.util.loadImageCenterCrop
 
 class GalleryAdapter2 :RecyclerView.Adapter<GalleryHolder>() {
 
@@ -21,7 +22,7 @@ class GalleryAdapter2 :RecyclerView.Adapter<GalleryHolder>() {
 
     override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
 
-        holder.image.loadImage(mUris[holder.adapterPosition])
+        holder.image.loadImageCenterCrop(mUris[holder.adapterPosition])
     }
 
     override fun getItemCount(): Int {

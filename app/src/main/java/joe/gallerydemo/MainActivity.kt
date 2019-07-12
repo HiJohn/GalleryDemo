@@ -4,13 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
-import joe.gallerydemo.activities.GalleryActivity
-import joe.gallerydemo.activities.KeepLauncherActivity
-import joe.gallerydemo.activities.VideoActivity
-import joe.gallerydemo.activities.VideoPlayListActivity
+import joe.gallerydemo.activities.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -71,6 +69,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    fun verticalGallery(view:View){
+        startActivity(Intent(this,Gallery2Activity::class.java))
+    }
 
     private fun startVideoPlayList(){
         startActivity(Intent(this,VideoPlayListActivity::class.java))

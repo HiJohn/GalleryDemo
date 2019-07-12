@@ -58,4 +58,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gallery_tip" />
 
+    <Button
+        android:id="@+id/verticalGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="verticalGallery"
+        android:onClick="verticalGallery"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_video_list"
+         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
