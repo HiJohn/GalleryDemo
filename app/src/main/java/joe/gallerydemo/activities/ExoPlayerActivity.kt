@@ -58,8 +58,6 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
     private val KEY_WINDOW = "window"
     private val KEY_POSITION = "position"
 
-    private lateinit var app: GalleryApp
-
     private var startWindow: Int = 0
     private var startPosition: Long = 0
     lateinit var player: SimpleExoPlayer
@@ -100,7 +98,6 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
 
 
     private fun initIntent() {
-        app = application as GalleryApp
         uri = intent.getParcelableExtra("uri")
         if (uri == null) {
             ToastUtils.showShort("uri null")
@@ -113,7 +110,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
         }
 
 
-        dataSourceFactory = app.cacheDataSourceFactory
+        dataSourceFactory = GalleryApp.instance.cacheDataSourceFactory
         mediaSource = buildMediaSource(uri, null)
     }
 

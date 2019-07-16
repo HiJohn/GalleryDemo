@@ -5,15 +5,23 @@ import android.content.Context
 import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Build
 import com.google.android.exoplayer2.ExoPlayerLibraryInfo
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.upstream.cache.*
+import joe.gallerydemo.util.ExoplayerPool
 import leakcanary.LeakSentry
 import java.io.File
+import kotlin.properties.Delegates
+
 const val DOWNLOAD_CONTENT_DIRECTORY = "downloads"
 class GalleryApp :Application() {
 
+
+    companion object{
+        var instance:GalleryApp by Delegates.notNull()
+    }
 
     private lateinit var databaseProvider:DatabaseProvider
     private lateinit var downloadContentDirectory:File
@@ -22,8 +30,7 @@ class GalleryApp :Application() {
     private lateinit var httpDataSourceFactory: DefaultHttpDataSourceFactory
     private lateinit var downloadCache: Cache
 
-    lateinit var userAgent:String
-
+    private lateinit var userAgent:String
 
     private fun getUserAgent(context: Context, applicationName: String): String {
         val versionName: String
@@ -46,6 +53,7 @@ class GalleryApp :Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         LeakSentry.config = LeakSentry.config.copy(watchFragmentViews = true,watchActivities =
         true,watchFragments = true)
         init()
@@ -65,6 +73,14 @@ class GalleryApp :Application() {
                 FileDataSourceFactory(),
                 /* eventListener= */ null,
                 CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR, null)
+    }
+
+    fun getPlayer():SimpleExoPlayer{
+        return ExoplayerPool.obtain(this)
+    }
+
+    fun poolPlayer(player: SimpleExoPlayer){
+        ExoplayerPool.release(player)
     }
 
 }

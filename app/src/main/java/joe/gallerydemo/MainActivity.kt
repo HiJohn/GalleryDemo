@@ -73,6 +73,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this,Gallery2Activity::class.java))
     }
 
+    fun verticalVideos(view: View){
+        startActivity(Intent(this,VideoListActivity::class.java))
+    }
+
     private fun startVideoPlayList(){
         startActivity(Intent(this,VideoPlayListActivity::class.java))
     }

@@ -14,8 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_keep"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/start_keep" />
 
     <Button
         android:id="@+id/start_keep"
@@ -27,10 +26,9 @@
         android:layout_marginBottom="8dp"
         android:text="keep"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/start_video_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/start_video_list" />
 
 
     <Button
@@ -62,11 +60,21 @@
         android:id="@+id/verticalGallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="verticalGallery"
         android:onClick="verticalGallery"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="verticalGallery"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_video_list"
-         />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_video_list" />
+
+
+    <Button
+        android:id="@+id/verticalVideos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="verticalVideos"
+        android:text="verticalVideos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verticalGallery" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

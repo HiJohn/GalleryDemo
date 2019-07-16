@@ -9,7 +9,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 object ExoplayerPool {
 
 
-    private val pool: Pools.SynchronizedPool<SimpleExoPlayer> = Pools.SynchronizedPool(5)
+    private val pool: Pools.SynchronizedPool<SimpleExoPlayer> = Pools.SynchronizedPool(2)
 
     fun obtain(context: Context): SimpleExoPlayer{
         var player = pool.acquire()
@@ -28,6 +28,10 @@ object ExoplayerPool {
     fun release(player: SimpleExoPlayer) {
         //clear state if needed
         pool.release(player)
+    }
+
+    fun clear(){
+
     }
 
 }

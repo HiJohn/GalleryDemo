@@ -1,10 +1,15 @@
 package joe.gallerydemo.adapters
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.LogUtils
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
+import joe.gallerydemo.GalleryApp
 import joe.gallerydemo.R
 import joe.gallerydemo.model.VideoInfo
 
@@ -12,10 +17,10 @@ import joe.gallerydemo.model.VideoInfo
 class VideoPlayAdapter2 :RecyclerView.Adapter<VideoPlayAdapter2.VideoHolder>() {
 
 
-    var  videoDatas = ArrayList<VideoInfo>()
+    var  videos = ArrayList<VideoInfo>()
 
     override fun getItemCount(): Int {
-        return videoDatas.size
+        return videos.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoHolder {
@@ -27,13 +32,36 @@ class VideoPlayAdapter2 :RecyclerView.Adapter<VideoPlayAdapter2.VideoHolder>() {
     }
 
     override fun onBindViewHolder(holder: VideoHolder, position: Int) {
+        holder.bind(videos[holder.adapterPosition])
 
     }
 
 
-
-
     class VideoHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
-        val playerView: PlayerView = itemView.findViewById(R.id.exoplayer_view)
+        private val playerView: PlayerView = itemView.findViewById(R.id.exoplayer_view)
+        private lateinit var videoInfo:VideoInfo
+        lateinit var mediaSource: ProgressiveMediaSource
+        lateinit var player: SimpleExoPlayer
+        fun bind(vi:VideoInfo){
+            videoInfo = vi
+            buildMedia()
+        }
+        private fun buildMedia(){
+            val uri = Uri.parse(videoInfo.path)
+            mediaSource = ProgressiveMediaSource.Factory(GalleryApp.instance.cacheDataSourceFactory)
+                    .createMediaSource(uri)
+        }
+        fun preparePlay(){
+            player = GalleryApp.instance.getPlayer()
+            playerView.player = player
+            player.prepare(mediaSource)
+            player.playWhenReady = true
+            LogUtils.i("player :"+player.hashCode())
+        }
+
+        fun detachPlayer(){
+            playerView.player = null
+            GalleryApp.instance.poolPlayer(player)
+        }
     }
 }
