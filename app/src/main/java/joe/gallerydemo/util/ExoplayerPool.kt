@@ -30,8 +30,6 @@ object ExoplayerPool {
         pool.release(player)
     }
 
-    fun clear(){
 
-    }
 
 }

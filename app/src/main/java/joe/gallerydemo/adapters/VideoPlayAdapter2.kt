@@ -60,6 +60,7 @@ class VideoPlayAdapter2 :RecyclerView.Adapter<VideoPlayAdapter2.VideoHolder>() {
         }
 
         fun detachPlayer(){
+            player.playWhenReady = false
             playerView.player = null
             GalleryApp.instance.poolPlayer(player)
         }

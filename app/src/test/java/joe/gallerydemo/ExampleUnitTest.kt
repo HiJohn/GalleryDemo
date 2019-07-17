@@ -3,6 +3,7 @@ package joe.gallerydemo
 import org.junit.Test
 
 import org.junit.Assert.*
+import kotlin.math.abs
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -44,8 +45,14 @@ class ExampleUnitTest {
         var name = "barry"
     }
 
+
+
+
     @Test
     fun test(){
+
+
+
 
 //        var mood = "I am sad "
 //        run{
@@ -57,7 +64,7 @@ class ExampleUnitTest {
 
         val filteredList = listOf(3,5,20,100,-25).filter(
                 fun(el):Boolean{
-                    return Math.abs(el)>20
+                    return abs(el) >20
                 })
 
 

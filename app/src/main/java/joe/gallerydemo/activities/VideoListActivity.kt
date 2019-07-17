@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.LogUtils
 import joe.gallerydemo.R
 import joe.gallerydemo.adapters.VideoPlayAdapter2
 import joe.gallerydemo.animator.OnViewPagerListener
@@ -12,7 +13,7 @@ import joe.gallerydemo.model.VideoInfo
 import joe.gallerydemo.util.RxAsync
 import joe.gallerydemo.util.VideoStoreUtil
 import kotlinx.android.synthetic.main.activity_video_list.*
-
+private const val TAG = "VideoListActivity"
 class VideoListActivity : AppCompatActivity() {
 
 
@@ -26,12 +27,14 @@ class VideoListActivity : AppCompatActivity() {
             val videoHolder = videoListRv.findViewHolderForLayoutPosition(position) as
                     VideoPlayAdapter2.VideoHolder
             videoHolder.detachPlayer()
+            LogUtils.i(TAG, " onPageRelease :$position")
 
         }
 
         override fun onPageSelected(itemView: View, position: Int, isBottom: Boolean) {
             val videoHolder = videoListRv.findViewHolderForLayoutPosition(position) as VideoPlayAdapter2.VideoHolder
             videoHolder.preparePlay()
+            LogUtils.i(TAG, " onPageSelected :$position")
 
         }
 
@@ -68,8 +71,5 @@ class VideoListActivity : AppCompatActivity() {
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
 }
