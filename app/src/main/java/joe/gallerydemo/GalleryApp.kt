@@ -83,4 +83,5 @@ class GalleryApp :Application() {
         ExoplayerPool.release(player)
     }
 
+
 }

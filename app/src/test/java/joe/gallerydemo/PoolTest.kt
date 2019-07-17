@@ -4,7 +4,7 @@ import androidx.core.util.Pools
 
 object PoolTest {
 
-    private val pool: Pools.SynchronizedPool<String> = Pools.SynchronizedPool(2)
+    private val pool: Pools.SynchronizedPool<String> = Pools.SynchronizedPool(5)
 
 
     fun obtain(): String {
@@ -18,5 +18,9 @@ object PoolTest {
     fun release(){
         pool.release("pooltest")
     }
-
+    fun clear(){
+        do {
+            println(" once ~")
+        } while (pool.acquire()!=null)
+    }
 }

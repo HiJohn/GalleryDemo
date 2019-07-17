@@ -36,6 +36,12 @@ class VideoPlayAdapter2 :RecyclerView.Adapter<VideoPlayAdapter2.VideoHolder>() {
 
     }
 
+    override fun onViewRecycled(holder: VideoHolder) {
+        holder.player.stop()
+        super.onViewRecycled(holder)
+
+    }
+
 
     class VideoHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         private val playerView: PlayerView = itemView.findViewById(R.id.exoplayer_view)

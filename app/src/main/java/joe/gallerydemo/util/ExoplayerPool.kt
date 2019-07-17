@@ -31,5 +31,14 @@ object ExoplayerPool {
     }
 
 
+    fun releasePlayer(player: SimpleExoPlayer){
+        player.release()
+    }
 
+    fun clear(){
+        do {
+            var player = pool.acquire()
+            player?.release()
+        } while (player!=null)
+    }
 }
