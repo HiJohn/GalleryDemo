@@ -75,13 +75,5 @@ class GalleryApp :Application() {
                 CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR, null)
     }
 
-    fun getPlayer():SimpleExoPlayer{
-        return ExoplayerPool.obtain(this)
-    }
-
-    fun poolPlayer(player: SimpleExoPlayer){
-        ExoplayerPool.release(player)
-    }
-
 
 }

@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.LogUtils
+import joe.gallerydemo.GalleryApp
 import joe.gallerydemo.R
+import joe.gallerydemo.adapters.VideoHolder
 import joe.gallerydemo.adapters.VideoPlayAdapter2
 import joe.gallerydemo.animator.OnViewPagerListener
 import joe.gallerydemo.animator.ViewPagerLayoutManager
 import joe.gallerydemo.model.VideoInfo
+import joe.gallerydemo.util.ExoplayerPool
 import joe.gallerydemo.util.RxAsync
 import joe.gallerydemo.util.VideoStoreUtil
 import kotlinx.android.synthetic.main.activity_video_list.*
@@ -21,20 +24,23 @@ class VideoListActivity : AppCompatActivity() {
 
     private lateinit var layoutManager: ViewPagerLayoutManager
 
+    private var mLastPosition = 0
+
     private val pagerListener = object:OnViewPagerListener{
         override fun onPageRelease(itemView: View, isNext: Boolean, position: Int) {
 
-            val videoHolder = videoListRv.findViewHolderForLayoutPosition(position) as
-                    VideoPlayAdapter2.VideoHolder
+            val videoHolder = videoListRv.findViewHolderForLayoutPosition(position) as VideoHolder
             videoHolder.detachPlayer()
-            LogUtils.i(TAG, " onPageRelease :$position")
+//            videoHolder.pauseOrPlayVideo(false)
+//            LogUtils.i(TAG, " onPageRelease :$position")
 
         }
 
         override fun onPageSelected(itemView: View, position: Int, isBottom: Boolean) {
-            val videoHolder = videoListRv.findViewHolderForLayoutPosition(position) as VideoPlayAdapter2.VideoHolder
+            mLastPosition = position
+            val videoHolder = videoListRv.findViewHolderForLayoutPosition(position) as VideoHolder
             videoHolder.preparePlay()
-            LogUtils.i(TAG, " onPageSelected :$position")
+//            LogUtils.i(TAG, " onPageSelected :$position")
 
         }
 
@@ -71,5 +77,19 @@ class VideoListActivity : AppCompatActivity() {
         })
     }
 
+    private fun stopCurrent(){
+        val videoHolder = videoListRv.findViewHolderForLayoutPosition(mLastPosition) as VideoHolder
+        videoHolder.detachPlayer()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopCurrent()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ExoplayerPool.clear()
+    }
 
 }

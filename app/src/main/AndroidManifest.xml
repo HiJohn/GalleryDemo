@@ -26,7 +26,9 @@
             android:name=".activities.Gallery2Activity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/PicFullScreen">
-
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".activities.VideoPlayListActivity"
@@ -42,19 +44,17 @@
             <intent-filter>
                 <action android:name="com.google.android.exoplayer.demo.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:scheme="http" />
                 <data android:scheme="https" />
                 <data android:scheme="content" />
                 <data android:scheme="asset" />
                 <data android:scheme="file" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="com.google.android.exoplayer.demo.action.VIEW_LIST" />
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.android.exoplayer.demo.action.VIEW_LIST" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".activities.VideoActivity" />
         <activity
@@ -64,8 +64,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
