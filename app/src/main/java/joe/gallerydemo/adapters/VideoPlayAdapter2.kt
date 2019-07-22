@@ -10,10 +10,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
 import joe.gallerydemo.GalleryApp
 import joe.gallerydemo.R
-import joe.gallerydemo.fragments.TAG
 import joe.gallerydemo.model.VideoInfo
-import joe.gallerydemo.util.ExoplayerPool
-import joe.gallerydemo.util.Logs
 
 
 class VideoPlayAdapter2 :RecyclerView.Adapter<VideoHolder>() {
@@ -38,14 +35,6 @@ class VideoPlayAdapter2 :RecyclerView.Adapter<VideoHolder>() {
 
     }
 
-    override fun onViewRecycled(holder: VideoHolder) {
-        Logs.i(TAG," onViewRecycled :"+holder.adapterPosition)
-//        holder.player.stop()
-        super.onViewRecycled(holder)
-
-    }
-
-
 
 }
 
@@ -64,7 +53,7 @@ class VideoHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
                 .createMediaSource(uri)
     }
     fun preparePlay(){
-        player = ExoplayerPool.obtain()
+        player = GalleryApp.instance.player
         playerView.player = player
         player.prepare(mediaSource)
         player.playWhenReady = true
@@ -73,7 +62,6 @@ class VideoHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
     fun detachPlayer(){
         player.playWhenReady = false
         playerView.player = null
-        ExoplayerPool.release(player)
     }
 
     fun pauseOrPlayVideo(playWhenReady:Boolean){

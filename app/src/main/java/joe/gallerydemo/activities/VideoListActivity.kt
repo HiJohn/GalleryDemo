@@ -1,5 +1,6 @@
 package joe.gallerydemo.activities
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -32,7 +33,6 @@ class VideoListActivity : AppCompatActivity() {
             val videoHolder = videoListRv.findViewHolderForLayoutPosition(position) as VideoHolder
             videoHolder.detachPlayer()
 //            videoHolder.pauseOrPlayVideo(false)
-//            LogUtils.i(TAG, " onPageRelease :$position")
 
         }
 
@@ -51,6 +51,8 @@ class VideoListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = Color.TRANSPARENT
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         setContentView(R.layout.activity_video_list)
         adapter = VideoPlayAdapter2()
         layoutManager = ViewPagerLayoutManager(this,LinearLayoutManager.VERTICAL)
@@ -87,9 +89,5 @@ class VideoListActivity : AppCompatActivity() {
         stopCurrent()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        ExoplayerPool.clear()
-    }
 
 }
