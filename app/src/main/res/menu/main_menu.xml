@@ -11,4 +11,9 @@
         android:id="@+id/picture_menu"
         android:title="@string/play_list"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/video_view_list"
+        android:title="@string/video_view_list"
+        app:showAsAction="ifRoom" />
 </menu>

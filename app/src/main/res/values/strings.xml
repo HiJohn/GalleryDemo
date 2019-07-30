@@ -2,6 +2,7 @@
     <string name="app_name">GalleryDemo</string>
     <string name="gallery">gallery</string>
     <string name="play_list">playlist</string>
+    <string name="video_view_list">video view list</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

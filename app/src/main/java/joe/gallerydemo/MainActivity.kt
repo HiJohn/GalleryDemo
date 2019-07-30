@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
             R.id.gallery_menu -> checkPermission()
 
             R.id.picture_menu -> startVideoPlayList()
+
+            R.id.video_view_list -> startVideoViewList()
             else ->
                     print("nothing")
         }
@@ -81,4 +83,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this,VideoPlayListActivity::class.java))
     }
 
+    private fun startVideoViewList(){
+        startActivity(Intent(this,VideoViewListActivity::class.java))
+    }
 }
