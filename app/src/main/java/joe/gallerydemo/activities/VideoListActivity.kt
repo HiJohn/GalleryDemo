@@ -17,8 +17,8 @@ import joe.gallerydemo.util.ExoplayerPool
 import joe.gallerydemo.util.RxAsync
 import joe.gallerydemo.util.VideoStoreUtil
 import kotlinx.android.synthetic.main.activity_video_list.*
-private const val TAG = "VideoListActivity"
 class VideoListActivity : AppCompatActivity() {
+    private  val TAG = "VideoListActivity"
 
 
     private lateinit var adapter: VideoPlayAdapter2

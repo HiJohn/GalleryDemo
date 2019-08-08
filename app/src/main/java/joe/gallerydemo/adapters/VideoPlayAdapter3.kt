@@ -37,12 +37,22 @@ class VideoPlayAdapter3 :RecyclerView.Adapter<VideoHolder3>(){
 }
 
 class VideoHolder3(itemView: View) : RecyclerView.ViewHolder(itemView){
+    private var curPos = 0
     private lateinit var videoInfo: VideoInfo
     private val videoView: VideoView = itemView.findViewById(R.id.video_view)
     private lateinit var uri: Uri
     fun bind(vi:VideoInfo){
         videoInfo = vi
         buildMedia()
+        videoView.setOnClickListener {
+            if (videoView.isPlaying){
+                videoView.pause()
+                curPos = videoView.currentPosition
+            }else{
+                videoView.seekTo(curPos)
+                videoView.start()
+            }
+        }
     }
 
 
@@ -64,10 +74,17 @@ class VideoHolder3(itemView: View) : RecyclerView.ViewHolder(itemView){
         if (videoView.isPlaying) {
             videoView.resume()
         }else{
-            videoView.start()
+            videoView.seekTo(curPos)
+            if (curPos>0) {
+                videoView.resume()
+            }else{
+                videoView.start()
+            }
+
         }
     }
     fun pause(){
+        curPos = videoView.currentPosition
         videoView.pause()
     }
 

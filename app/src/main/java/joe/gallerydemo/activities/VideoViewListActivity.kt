@@ -71,4 +71,22 @@ class VideoViewListActivity : AppCompatActivity() {
         videoviewlist.adapter = adapter
         initData()
     }
+
+    override fun onResume() {
+        super.onResume()
+        val videoHolder = videoviewlist.findViewHolderForLayoutPosition(mLastPosition)
+        if (videoHolder!=null&&videoHolder is VideoHolder3) {
+            videoHolder.startPlay()
+//            videoHolder.resume()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val videoHolder = videoviewlist.findViewHolderForLayoutPosition(mLastPosition)
+        if (videoHolder!=null&&videoHolder is VideoHolder3) {
+            videoHolder.pause()
+//            videoHolder.resume()
+        }
+    }
 }
