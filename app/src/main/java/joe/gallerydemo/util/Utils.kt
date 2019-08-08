@@ -91,7 +91,7 @@ fun test(){
 //    }
 
 
-    var p = Person()
+//    var p = Person()
 
 
     var filteredList = listOf(3,5,20,100,-25).filter(

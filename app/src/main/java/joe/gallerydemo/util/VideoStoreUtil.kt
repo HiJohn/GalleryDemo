@@ -20,7 +20,7 @@ object VideoStoreUtil  {
         val imgUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val cursor = context.contentResolver.query(imgUri, null, null, null, null)
         val uris = ArrayList<Uri>()
-        var mUri: Uri? = null
+        var mUri: Uri?
         if (cursor != null) {
             while (cursor.moveToNext()) {
 

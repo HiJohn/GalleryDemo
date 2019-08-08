@@ -95,7 +95,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
 
     override fun onResume() {
         super.onResume()
-        if (Util.SDK_INT <=23||player==null) {
+        if (Util.SDK_INT <=23) {
             initPlayer()
             exoplayer_view.onResume()
         }

@@ -31,6 +31,7 @@ import leakcanary.LeakSentry
 import java.net.CookieHandler
 import java.net.CookieManager
 import java.net.CookiePolicy
+import kotlin.math.max
 
 class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlView.VisibilityListener {
 
@@ -99,12 +100,13 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
 
     private fun initIntent() {
         uri = intent.getParcelableExtra("uri")
-        if (uri == null) {
-            ToastUtils.showShort("uri null")
-            finish()
-        }else{
-            LogUtils.i(TAG,"uri:$uri")
-        }
+        LogUtils.i(TAG,"uri:$uri")
+//        if (uri == null) {
+//            ToastUtils.showShort("uri null")
+//            finish()
+//        }else{
+//
+//        }
         if (CookieHandler.getDefault() !== cookieManager) {
             CookieHandler.setDefault(cookieManager)
         }
@@ -205,7 +207,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
     }
     override fun onResume() {
         super.onResume()
-        if (Util.SDK_INT <= 23 || player == null) {
+        if (Util.SDK_INT <= 23) {
             initPlayer()
             player_view.onResume()
         }
@@ -257,7 +259,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
     private fun updateStartPosition() {
         if (player != null) {
             startWindow = player.currentWindowIndex
-            startPosition = Math.max(0, player.contentPosition)
+            startPosition = max(0, player.contentPosition)
         }
     }
 
