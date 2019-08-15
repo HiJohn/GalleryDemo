@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.VideoListActivity"
+            android:name=".activities.PlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:theme="@style/PlayerTheme">
             <intent-filter>
@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.VideoPlayListActivity"
+            android:name=".activities.VideoPagerListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/PicFullScreen">
             <intent-filter>
@@ -70,6 +70,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".activities.VideoActivity" />
+        <activity android:name=".activities.VideoGridActivity" />
         <activity
             android:name=".activities.KeepLauncherActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

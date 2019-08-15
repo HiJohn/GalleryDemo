@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
 
-    companion object{
-        const val KEY_ORIENT:String = "orient"
+    companion object {
+        const val KEY_ORIENT: String = "orient"
     }
 
 
@@ -25,25 +25,25 @@ class MainActivity : AppCompatActivity() {
 
         start_keep.setOnClickListener { startActivity(Intent(this, KeepLauncherActivity::class.java)) }
 
-        start_video_list.setOnClickListener{startActivity(Intent(this, VideoActivity::class.java))  }
+        start_video_list.setOnClickListener { startActivity(Intent(this, VideoActivity::class.java)) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-        menuInflater.inflate(R.menu.main_menu,menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        when(item?.itemId){
+        when (item?.itemId) {
             R.id.gallery_menu -> checkPermission()
 
             R.id.picture_menu -> startVideoPlayList()
 
             R.id.video_view_list -> startVideoViewList()
             else ->
-                    print("nothing")
+                print("nothing")
         }
 
         return super.onOptionsItemSelected(item)
@@ -54,8 +54,11 @@ class MainActivity : AppCompatActivity() {
         if (PermissionUtils.isGranted(PermissionConstants.STORAGE)) {
             startGallery()
         } else {
-            PermissionUtils.permission(PermissionConstants.STORAGE).callback(object: PermissionUtils.SimpleCallback{
-                override fun onDenied() {finish()}
+            PermissionUtils.permission(PermissionConstants.STORAGE).callback(object : PermissionUtils.SimpleCallback {
+                override fun onDenied() {
+                    finish()
+                }
+
                 override fun onGranted() {
                     startGallery()
                 }
@@ -63,27 +66,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun  startGallery(){
-        val i  = Intent(this,GalleryActivity::class.java)
-        i.putExtra(KEY_ORIENT,orientation_vp.isChecked)
+    private fun startGallery() {
+        val i = Intent(this, GalleryActivity::class.java)
+        i.putExtra(KEY_ORIENT, orientation_vp.isChecked)
 
         startActivity(i)
     }
 
 
-    fun verticalGallery(view:View){
-        startActivity(Intent(this,Gallery2Activity::class.java))
+    fun verticalGallery(view: View) {
+        startActivity(Intent(this, Gallery2Activity::class.java))
     }
 
-    fun verticalVideos(view: View){
-        startActivity(Intent(this,VideoListActivity::class.java))
+    fun verticalVideos(view: View) {
+        startActivity(Intent(this, PlayerActivity::class.java))
     }
 
-    private fun startVideoPlayList(){
-        startActivity(Intent(this,VideoPlayListActivity::class.java))
+    private fun startVideoPlayList() {
+        startActivity(Intent(this, VideoPagerListActivity::class.java))
     }
 
-    private fun startVideoViewList(){
-        startActivity(Intent(this,VideoViewListActivity::class.java))
+    private fun startVideoViewList() {
+        startActivity(Intent(this, VideoViewListActivity::class.java))
+    }
+
+    fun gridVideo(view:View) {
+        startActivity(Intent(this, VideoGridActivity::class.java))
     }
 }

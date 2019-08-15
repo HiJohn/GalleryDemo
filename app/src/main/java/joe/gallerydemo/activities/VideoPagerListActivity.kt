@@ -2,7 +2,6 @@ package joe.gallerydemo.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -13,7 +12,7 @@ import joe.gallerydemo.util.RxAsync
 import joe.gallerydemo.util.VideoStoreUtil
 import kotlinx.android.synthetic.main.activity_video_play_list.*
 
-class VideoPlayListActivity : AppCompatActivity() {
+class VideoPagerListActivity : AppCompatActivity() {
 
     lateinit var adapter: VideoPlayAdapter
 
@@ -52,7 +51,7 @@ class VideoPlayListActivity : AppCompatActivity() {
     private fun initData(){
         RxAsync.async(object: RxAsync.RxCallBack<ArrayList<VideoInfo>>{
             override fun call(): ArrayList<VideoInfo> {
-                return  VideoStoreUtil.getVideoInfoList(this@VideoPlayListActivity)
+                return  VideoStoreUtil.getVideoInfoList(this@VideoPagerListActivity)
             }
 
             override fun onResult(t: ArrayList<VideoInfo>) {

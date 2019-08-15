@@ -5,18 +5,21 @@ import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.blankj.utilcode.util.SizeUtils
 import joe.gallerydemo.R
 import joe.gallerydemo.adapters.VideoAdapter
 import joe.gallerydemo.interfaces.OnVideoItemClickListener
 import joe.gallerydemo.model.VideoInfo
 import joe.gallerydemo.util.RxAsync
 import joe.gallerydemo.util.VideoStoreUtil
+import joe.gallerydemo.widgets.GridSpacingItemDecoration
 import kotlinx.android.synthetic.main.activity_video.*
 
-class VideoActivity : AppCompatActivity() ,OnVideoItemClickListener {
+class VideoGridActivity : AppCompatActivity() ,OnVideoItemClickListener {
 
 
     val videoAdapter = VideoAdapter()
@@ -32,23 +35,11 @@ class VideoActivity : AppCompatActivity() ,OnVideoItemClickListener {
         swipeRefresh.setDistanceToTriggerSync(300)
         swipeRefresh.setProgressBackgroundColorSchemeColor(Color.WHITE)
         swipeRefresh.setOnRefreshListener { loadVideoList() }
-        videoRv.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
+        videoRv.layoutManager = GridLayoutManager(this,3)
+        videoRv.addItemDecoration(GridSpacingItemDecoration(3,SizeUtils.dp2px(6F),true,0))
         videoRv.adapter = videoAdapter
         videoAdapter.onVideoItemClickListener = this
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            videoRv.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-//
-//            }
-//
-//
-//        }
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            videoRv.setOnScrollChangeListener(object: View.OnScrollChangeListener {
-//                override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
-//                }
-//            })
-//        }
 
         loadVideoList()
 
@@ -59,7 +50,7 @@ class VideoActivity : AppCompatActivity() ,OnVideoItemClickListener {
 
         RxAsync.async(object:RxAsync.RxCallBack<ArrayList<VideoInfo>>{
             override fun call(): ArrayList<VideoInfo> {
-                return  VideoStoreUtil.getVideoInfoList(this@VideoActivity)
+                return  VideoStoreUtil.getVideoInfoList(this@VideoGridActivity)
             }
 
             override fun onResult(t: ArrayList<VideoInfo>) {

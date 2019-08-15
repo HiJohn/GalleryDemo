@@ -7,25 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.blankj.utilcode.util.LogUtils
-import com.google.android.exoplayer2.DefaultRenderersFactory
-import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackPreparer
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.RandomTrackSelection
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import joe.gallerydemo.GalleryApp
 import joe.gallerydemo.R
-import joe.gallerydemo.activities.VideoPlayListActivity
+import joe.gallerydemo.activities.VideoPagerListActivity
 
 import joe.gallerydemo.model.VideoInfo
-import joe.gallerydemo.util.ExoplayerPool
 import kotlinx.android.synthetic.main.item_exoplayer.*
 import leakcanary.LeakSentry
-import java.io.File
 
 const val TAG:String = "VideoPlayFragment"
 //FIXME can`t stop player when vertical scrolled out
@@ -40,7 +32,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
     private var position: Int = 0
     private lateinit var mediaSource: ProgressiveMediaSource
     private lateinit var player: SimpleExoPlayer
-    private lateinit var activity: VideoPlayListActivity
+    private lateinit var activity: VideoPagerListActivity
     lateinit var app: GalleryApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +49,7 @@ class VideoPlayFragment : Fragment() ,PlaybackPreparer{
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is VideoPlayListActivity){
+        if (context is VideoPagerListActivity){
             activity = context
         }
     }
