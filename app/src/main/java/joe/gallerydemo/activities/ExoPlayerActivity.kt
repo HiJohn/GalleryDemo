@@ -19,6 +19,7 @@ import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
 import com.google.android.exoplayer2.trackselection.*
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.PlayerControlView
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
@@ -146,6 +147,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
 //        player.addAnalyticsListener(EventLogger(trackSelector))
         player.playWhenReady = true
         player.repeatMode = Player.REPEAT_MODE_ONE
+        player_view.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH
         player_view.player = player
         player_view.setPlaybackPreparer(this)
 

@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, VideoViewListActivity::class.java))
     }
 
-    fun gridVideo(view:View) {
+    fun gridVideo(view:View ) {
         startActivity(Intent(this, VideoGridActivity::class.java))
     }
 }

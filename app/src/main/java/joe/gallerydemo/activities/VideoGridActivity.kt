@@ -12,6 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.SizeUtils
 import joe.gallerydemo.R
 import joe.gallerydemo.adapters.VideoAdapter
+import joe.gallerydemo.adapters.VideoGridAdapter
 import joe.gallerydemo.interfaces.OnVideoItemClickListener
 import joe.gallerydemo.model.VideoInfo
 import joe.gallerydemo.util.RxAsync
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_video.*
 class VideoGridActivity : AppCompatActivity() ,OnVideoItemClickListener {
 
 
-    val videoAdapter = VideoAdapter()
+    val videoAdapter = VideoGridAdapter()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
