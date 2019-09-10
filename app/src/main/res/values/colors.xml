@@ -6,4 +6,13 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="background_color">#ff000000</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="cFFA800">#FFA800</color>
+    <color name="cED8C64">#ED8C64</color>
+    <color name="c85D6B5">#85D6B5</color>
+    <color name="cA0C8F6">#A0C8F6</color>
+    <color name="cFC330E">#FC330E</color>
+
 </resources>

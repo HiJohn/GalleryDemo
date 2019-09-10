@@ -1,10 +1,12 @@
 package joe.gallerydemo.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Pair
+import android.view.View
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.exoplayer2.*
@@ -34,7 +36,8 @@ import java.net.CookieManager
 import java.net.CookiePolicy
 import kotlin.math.max
 
-class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlView.VisibilityListener {
+class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlView
+.VisibilityListener ,AspectRatioFrameLayout.AspectRatioListener{
 
 
     override fun preparePlayback() {
@@ -73,6 +76,8 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = Color.TRANSPARENT
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         setContentView(R.layout.activity_exoplayer)
 
         initIntent()
@@ -150,6 +155,7 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
         player_view.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH
         player_view.player = player
         player_view.setPlaybackPreparer(this)
+        player_view.setAspectRatioListener(this)
 
         val haveStartPosition = startWindow != C.INDEX_UNSET
         if (haveStartPosition) {
@@ -186,6 +192,12 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
             C.TYPE_OTHER -> {ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)}
             else -> throw IllegalStateException("Unsupported type: $type")
         }
+    }
+
+
+    override fun onAspectRatioUpdated(targetAspectRatio: Float, naturalAspectRatio: Float, aspectRatioMismatch: Boolean) {
+        LogUtils.i(TAG, " targetAspectRatio: $targetAspectRatio, naturalAspectRatio " +
+                ":$naturalAspectRatio, aspectRatioMismatch :$aspectRatioMismatch")
     }
 
 
