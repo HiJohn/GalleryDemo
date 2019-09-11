@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SizeUtils
 import joe.gallerydemo.R
 import joe.gallerydemo.adapters.VideoAdapter
@@ -76,6 +77,7 @@ class VideoGridActivity : AppCompatActivity() ,OnVideoItemClickListener {
     }
 
     override fun onVideoItemClick(videoInfo: VideoInfo,uri: Uri) {
+        LogUtils.i("parsifal","videoInfo:${videoInfo.height}")
         var i = Intent(this,ExoPlayerActivity::class.java)
         i.putExtra("uri",uri)
         startActivity(i)
