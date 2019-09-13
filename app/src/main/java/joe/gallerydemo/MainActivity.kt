@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
             R.id.picture_menu -> startVideoPlayList()
 
             R.id.video_view_list -> startVideoViewList()
+
+            R.id.for_test -> goForTest()
             else ->
                 print("nothing")
         }
@@ -92,5 +94,9 @@ class MainActivity : AppCompatActivity() {
 
     fun gridVideo(view:View ) {
         startActivity(Intent(this, VideoGridActivity::class.java))
+    }
+
+    fun goForTest() {
+        startActivity(Intent(this, ForTestActivity::class.java))
     }
 }

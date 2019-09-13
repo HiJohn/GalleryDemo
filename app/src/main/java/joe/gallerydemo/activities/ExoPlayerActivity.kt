@@ -40,6 +40,8 @@ class ExoPlayerActivity : AppCompatActivity(), PlaybackPreparer, PlayerControlVi
 .VisibilityListener ,AspectRatioFrameLayout.AspectRatioListener{
 
 
+
+
     override fun preparePlayback() {
         player.retry()
     }

@@ -9,6 +9,7 @@
     <string name="tips">Click the menu item and show the Gallery </string>
 
     <string name="btnCapture">capture</string>
+    <string name="for_test">forTest</string>
 
     <!-- exoplayer start-->
     <string name="error_generic">Playback failed</string>
