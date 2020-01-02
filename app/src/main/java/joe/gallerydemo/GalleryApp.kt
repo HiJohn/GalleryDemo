@@ -24,6 +24,14 @@ class GalleryApp :Application() {
 
     companion object{
         var instance:GalleryApp by Delegates.notNull()
+
+        // For Singleton instantiation
+//        @Volatile private var instance: GalleryApp? = null
+//
+//        fun getInstance() =
+//                instance ?: synchronized(this) {
+//                    instance ?: GalleryApp().also { instance = it }
+//                }
     }
 
     private lateinit var databaseProvider:DatabaseProvider
