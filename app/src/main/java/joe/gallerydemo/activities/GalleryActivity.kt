@@ -4,7 +4,11 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.constant.PermissionConstants
@@ -15,6 +19,8 @@ import joe.gallerydemo.adapters.GalleryAdapter
 import joe.gallerydemo.animator.ZoomOutPagerTransformer
 import joe.gallerydemo.fragments.ImageFragment
 import joe.gallerydemo.util.RxAsync
+import joe.gallerydemo.viewmodels.GalleryViewModel
+import joe.gallerydemo.viewmodels.LiveDataVMFactory
 import kotlinx.android.synthetic.main.activity_gallery.*
 
 class GalleryActivity : AppCompatActivity(){
@@ -32,6 +38,8 @@ class GalleryActivity : AppCompatActivity(){
         }
     }
 
+    private  val galleryViewModel:GalleryViewModel by viewModels{ LiveDataVMFactory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gallery)
@@ -48,21 +56,12 @@ class GalleryActivity : AppCompatActivity(){
 
 
     private fun initData() {
-
-        RxAsync.async(object:RxAsync.RxCallBack<ArrayList<Uri>>{
-            override fun call(): ArrayList<Uri> {
-                return getImageUris(this@GalleryActivity)
-            }
-
-            override fun onResult(t: ArrayList<Uri>) {
-                galleryAdapter.mUris = t
-                galleryAdapter.notifyDataSetChanged()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
+        galleryViewModel.loadUris()
+        galleryViewModel.uris.observe(this, Observer{
+            galleryAdapter.mUris = it
+            galleryAdapter.notifyDataSetChanged()
         })
+
 
     }
 

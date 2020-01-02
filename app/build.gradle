@@ -42,7 +42,7 @@ dependencies {
     //kotlin
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
-
+    implementation "androidx.activity:activity-ktx:1.0.0-rc01"
 
     //androidx lib
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
@@ -65,7 +65,7 @@ dependencies {
 
     //glide
     implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
     //retrofit
 //    implementation 'com.squareup.retrofit2:retrofit:2.6.0'

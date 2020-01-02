@@ -4,7 +4,12 @@ import android.content.Context
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ThreadUtils
+import joe.gallerydemo.GalleryApp
 import joe.gallerydemo.model.VideoInfo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 /**
@@ -16,7 +21,9 @@ object VideoStoreUtil  {
 
     private val TAG = "VideoStoreUtil"
 
-    fun getImagesUri(context: Context): ArrayList<Uri> {
+    suspend fun getImagesUri(): ArrayList<Uri> = withContext(Dispatchers.IO){
+        LogUtils.i("curry"," thread :"+ThreadUtils.isMainThread());
+        var context = GalleryApp.instance
         val imgUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val cursor = context.contentResolver.query(imgUri, null, null, null, null)
         val uris = ArrayList<Uri>()
@@ -32,7 +39,7 @@ object VideoStoreUtil  {
             cursor.close()
         }
 
-        return uris
+         uris
 
     }
 
@@ -43,6 +50,32 @@ object VideoStoreUtil  {
 
         return metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION)
     }
+
+
+    suspend fun getImageUris(context: Context): ArrayList<Uri> {
+
+        val imgUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val cursor = context.contentResolver.query(imgUri, null, null, null, null)
+        val uris = ArrayList<Uri>()
+
+        var mUri: Uri? = null
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+
+                val data = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA))
+
+                val id = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
+                mUri = Uri.withAppendedPath(imgUri, "" + id)
+
+                uris.add(mUri)
+
+            }
+            cursor.close()
+        }
+        return uris
+    }
+
+
 
     fun getAllMedia(context: Context): ArrayList<String>? {
         val videoItemHashSet = HashSet<String>()
