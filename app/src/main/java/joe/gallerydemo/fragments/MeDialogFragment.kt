@@ -2,7 +2,6 @@ package joe.gallerydemo.fragments
 
 import android.animation.ValueAnimator
 import android.content.DialogInterface
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +9,17 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.DialogFragment
 import joe.gallerydemo.R
+import joe.gallerydemo.interfaces.OnDialogDownloadListener
 import kotlinx.android.synthetic.main.dialog_fragment_demo.*
 
-class VideoDialogFragment : DialogFragment() {
+class MeDialogFragment : DialogFragment() {
 
 
     private var content: String = ""
     private var force: Boolean = false
     private var anim:ValueAnimator = ValueAnimator.ofInt(0,100)
+
+    private lateinit var mListener: OnDialogDownloadListener
 
     companion object {
         private const val ARG_CONTENT = "content"
@@ -25,7 +27,7 @@ class VideoDialogFragment : DialogFragment() {
 
         @JvmStatic
         fun newInstance(title: String, force: Boolean) =
-                VideoDialogFragment().apply {
+                MeDialogFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_CONTENT, title)
                         putBoolean(ARG_FORCE, force)
@@ -53,9 +55,19 @@ class VideoDialogFragment : DialogFragment() {
     }
 
     private fun initClick(){
-        upgrade_under_right.setOnClickListener { startDownload() }
+        upgrade_under_right.setOnClickListener {
+            upgrade_progress.visibility = View.VISIBLE
+            if (mListener!= null){
+                mListener.onDownload()
+            }
+        }
         upgrade_under_left.setOnClickListener { dismiss() }
-        upgrade_force.setOnClickListener { startDownload() }
+        upgrade_force.setOnClickListener {
+            upgrade_progress.visibility = View.VISIBLE
+            if (mListener!= null){
+                mListener.onForce()
+            }
+        }
 
     }
 
@@ -75,6 +87,15 @@ class VideoDialogFragment : DialogFragment() {
         anim.start()
     }
 
+    fun setDialogClickListener(listener: OnDialogDownloadListener){
+        mListener = listener
+    }
+
+    fun updateProgress(progress:Int){
+        if (upgrade_progress!=null) {
+            upgrade_progress.progress = progress
+        }
+    }
 
     private fun setForce(force: Boolean) {
         if (force) {

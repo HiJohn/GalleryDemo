@@ -58,6 +58,8 @@ dependencies {
 //    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
 
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     kapt 'androidx.annotation:annotation:1.1.0'
 
     implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
@@ -95,6 +97,9 @@ dependencies {
 
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-2'
+
+
+    implementation 'com.mindorks.android:prdownloader:0.6.0'
 
 
 //    implementation 'com.github.dueeeke.dkplayer:dkplayer-java:3.0.1'

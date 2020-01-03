@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import joe.gallerydemo.activities.*
-import joe.gallerydemo.fragments.VideoDialogFragment
+import joe.gallerydemo.fragments.MeDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -102,8 +102,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showDialogFragment(view: View) {
-        var dialogFragment = VideoDialogFragment.newInstance("Where?",false)
+        var dialogFragment = MeDialogFragment.newInstance("Where?",false)
         dialogFragment.show(supportFragmentManager,"tag")
+
+    }
+
+    fun toDown(view: View) {
+        startActivity(Intent(this, DownloadActivity::class.java))
 
     }
 }
