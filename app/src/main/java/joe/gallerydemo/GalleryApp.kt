@@ -66,9 +66,15 @@ class GalleryApp :Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        LeakSentry.config = LeakSentry.config.copy(watchFragmentViews = true,watchActivities =
-        true,watchFragments = true)
+        initLeakCanary()
         init()
+    }
+
+    private fun initLeakCanary(){
+        if (BuildConfig.DEBUG) {
+            LeakSentry.config = LeakSentry.config.copy(watchFragmentViews = true, watchActivities =
+            true, watchFragments = true)
+        }
     }
 
 
