@@ -9,6 +9,22 @@
     <color name="white">#FFFFFF</color>
 
 
+    <color name="black">#FF000000</color>
+    <color name="black_alpha_90">#E6000000</color>
+    <color name="black_alpha_80">#CC000000</color>
+    <color name="black_alpha_70">#B3000000</color>
+    <color name="black_alpha_60">#99000000</color>
+    <color name="black_alpha_54">#89000000</color>
+    <color name="black_alpha_50">#80000000</color>
+    <color name="black_alpha_40">#66000000</color>
+    <color name="black_alpha_30">#4D000000</color>
+    <color name="black_alpha_20">#33000000</color>
+    <color name="black_alpha_12">#1E000000</color>
+    <color name="black_alpha_10">#1A000000</color>
+    <color name="black_alpha_8">#14000000</color>
+    <color name="black_alpha_6">#10000000</color>
+    <color name="black_alpha_5">#0f000000</color>
+
     <color name="cFFA800">#FFA800</color>
     <color name="cED8C64">#ED8C64</color>
     <color name="c85D6B5">#85D6B5</color>

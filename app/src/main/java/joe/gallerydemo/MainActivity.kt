@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import joe.gallerydemo.activities.*
+import joe.gallerydemo.fragments.VideoDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -98,5 +99,11 @@ class MainActivity : AppCompatActivity() {
 
     fun goForTest() {
         startActivity(Intent(this, ForTestActivity::class.java))
+    }
+
+    fun showDialogFragment(view: View) {
+        var dialogFragment = VideoDialogFragment.newInstance("Where?",false)
+        dialogFragment.show(supportFragmentManager,"tag")
+
     }
 }
