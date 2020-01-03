@@ -4,6 +4,8 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import joe.gallerydemo.R
 import joe.gallerydemo.adapters.VideoHolder3
@@ -13,6 +15,10 @@ import joe.gallerydemo.animator.ViewPagerLayoutManager
 import joe.gallerydemo.model.VideoInfo
 import joe.gallerydemo.util.RxAsync
 import joe.gallerydemo.util.VideoStoreUtil
+import joe.gallerydemo.viewmodels.GalleryViewModel
+import joe.gallerydemo.viewmodels.LiveDataVMFactory
+import joe.gallerydemo.viewmodels.VideoListViewModel
+import joe.gallerydemo.viewmodels.VideoVMFactory
 import kotlinx.android.synthetic.main.activity_video_view_list.*
 
 class VideoViewListActivity : AppCompatActivity() {
@@ -22,6 +28,8 @@ class VideoViewListActivity : AppCompatActivity() {
     private lateinit var layoutManager: ViewPagerLayoutManager
 
     private var mLastPosition = 0
+    private  val viewModel: VideoListViewModel by viewModels{ VideoVMFactory }
+
 
     private val pagerListener = object: OnViewPagerListener {
         override fun onPageRelease(itemView: View, isNext: Boolean, position: Int) {
@@ -43,18 +51,12 @@ class VideoViewListActivity : AppCompatActivity() {
         }
     }
     private fun initData(){
-        RxAsync.async(object: RxAsync.RxCallBack<ArrayList<VideoInfo>>{
-            override fun call(): ArrayList<VideoInfo> {
-                return  VideoStoreUtil.getVideoInfoList(this@VideoViewListActivity)
-            }
 
-            override fun onResult(t: ArrayList<VideoInfo>) {
-                adapter.videos = t
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onError(e: Throwable) {}
+        viewModel.mVideoInfoList.observe(this, Observer {
+            adapter.videos = it
+            adapter.notifyDataSetChanged()
         })
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

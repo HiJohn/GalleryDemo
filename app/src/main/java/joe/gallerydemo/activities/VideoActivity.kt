@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -14,13 +16,16 @@ import joe.gallerydemo.interfaces.OnVideoItemClickListener
 import joe.gallerydemo.model.VideoInfo
 import joe.gallerydemo.util.RxAsync
 import joe.gallerydemo.util.VideoStoreUtil
+import joe.gallerydemo.viewmodels.VideoListViewModel
+import joe.gallerydemo.viewmodels.VideoVMFactory
 import kotlinx.android.synthetic.main.activity_video.*
 
 class VideoActivity : AppCompatActivity() ,OnVideoItemClickListener {
 
 
-    val videoAdapter = VideoAdapter()
+    private  val videoAdapter = VideoAdapter()
 
+    private  val viewModel: VideoListViewModel by viewModels{ VideoVMFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,33 +59,13 @@ class VideoActivity : AppCompatActivity() ,OnVideoItemClickListener {
 
     }
 
-    fun loadVideoList(){
+     private fun loadVideoList(){
 
-
-        RxAsync.async(object:RxAsync.RxCallBack<ArrayList<VideoInfo>>{
-            override fun call(): ArrayList<VideoInfo> {
-                return  VideoStoreUtil.getVideoInfoList(this@VideoActivity)
-            }
-
-            override fun onResult(t: ArrayList<VideoInfo>) {
-                videoAdapter.videoInfos = t
-                videoAdapter.notifyDataSetChanged()
-                swipeRefresh.isRefreshing = false
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
+        viewModel.mVideoInfoList.observe(this, Observer {
+            videoAdapter.videoInfos = it
+            videoAdapter.notifyDataSetChanged()
         })
 
-//        GlobalScope.launch {
-//            val data:ArrayList<VideoInfo>? = VideoStoreUtil.getVideoInfoList(this@VideoActivity)
-//
-//        }
-
-//        launch{
-//
-//        }
     }
 
     override fun onVideoItemClick(videoInfo: VideoInfo,uri: Uri) {

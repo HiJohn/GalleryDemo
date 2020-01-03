@@ -56,8 +56,9 @@ class GalleryActivity : AppCompatActivity(){
 
 
     private fun initData() {
-        galleryViewModel.loadUris()
-        galleryViewModel.uris.observe(this, Observer{
+//        galleryAdapter.mUris = galleryViewModel.mUris.value!!
+
+        galleryViewModel.mUris.observe(this, Observer {
             galleryAdapter.mUris = it
             galleryAdapter.notifyDataSetChanged()
         })

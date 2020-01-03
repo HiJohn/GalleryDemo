@@ -10,19 +10,11 @@ import kotlinx.coroutines.withContext
 
 class GalleryViewModel:ViewModel() {
 
-    var uris:MutableLiveData<ArrayList<Uri>> = MutableLiveData()
 
-    fun  loadUris(){
-        GlobalScope.launch {
-            val ret =VideoStoreUtil.getImagesUri()
-            setValueToUri(ret)
-        }
+    var mUris:LiveData<ArrayList<Uri>> = liveData {
+        emit(VideoStoreUtil.getImagesUri())
     }
 
-
-    private suspend fun setValueToUri(ret:ArrayList<Uri>) = withContext(Dispatchers.Main){
-        uris.value = ret
-    }
 }
 
 

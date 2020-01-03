@@ -2,6 +2,8 @@ package joe.gallerydemo.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -10,6 +12,8 @@ import joe.gallerydemo.adapters.VideoPlayAdapter
 import joe.gallerydemo.model.VideoInfo
 import joe.gallerydemo.util.RxAsync
 import joe.gallerydemo.util.VideoStoreUtil
+import joe.gallerydemo.viewmodels.VideoListViewModel
+import joe.gallerydemo.viewmodels.VideoVMFactory
 import kotlinx.android.synthetic.main.activity_video_play_list.*
 
 class VideoPagerListActivity : AppCompatActivity() {
@@ -17,6 +21,7 @@ class VideoPagerListActivity : AppCompatActivity() {
     lateinit var adapter: VideoPlayAdapter
 
     lateinit var player:SimpleExoPlayer
+    private  val viewModel: VideoListViewModel by viewModels{ VideoVMFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,17 +54,9 @@ class VideoPagerListActivity : AppCompatActivity() {
     }
 
     private fun initData(){
-        RxAsync.async(object: RxAsync.RxCallBack<ArrayList<VideoInfo>>{
-            override fun call(): ArrayList<VideoInfo> {
-                return  VideoStoreUtil.getVideoInfoList(this@VideoPagerListActivity)
-            }
-
-            override fun onResult(t: ArrayList<VideoInfo>) {
-                adapter.videoList = t
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onError(e: Throwable) {}
+        viewModel.mVideoInfoList.observe(this, Observer {
+            adapter.videoList = it
+            adapter.notifyDataSetChanged()
         })
     }
 
