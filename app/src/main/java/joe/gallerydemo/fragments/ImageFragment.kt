@@ -45,7 +45,7 @@ class ImageFragment : Fragment() {
         private const val ARG_URI = "uri"
         private const val ARG_POSITION = "position"
 
-
+        @JvmStatic
         fun newInstance(position: Int, path: String?, uri: Uri): ImageFragment {
             val fragment = ImageFragment()
             val args = Bundle()

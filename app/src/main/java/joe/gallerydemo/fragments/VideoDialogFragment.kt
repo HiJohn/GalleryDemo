@@ -62,7 +62,7 @@ class VideoDialogFragment : DialogFragment() {
 
     private fun startDownload(){
         upgrade_progress.visibility = View.VISIBLE
-        anim.repeatCount = 1
+        anim.repeatCount = 0
         anim.interpolator = LinearInterpolator()
         anim.duration = 2000L
         anim.addUpdateListener {

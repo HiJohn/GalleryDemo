@@ -10,10 +10,44 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestOptions
 import joe.gallerydemo.R
 import joe.gallerydemo.fragments.ImageFragment
+import java.io.File
 
 fun ImageView.loadImage(uri: Uri){
     Glide.with(this)
             .load(uri).transition(withCrossFade(300))
+            .placeholder(R.drawable.transparent)
+            .fallback(R.drawable.transparent)
+            .transition(withCrossFade(300))
+            .apply(RequestOptions().skipMemoryCache(false).transform(MultiTransformation
+            (CenterCrop(), RoundedCorners(4))))
+            .into(this)
+}
+
+fun ImageView.loadImage(url:String){
+    Glide.with(this)
+            .load(url).transition(withCrossFade(300))
+            .placeholder(R.drawable.transparent)
+            .fallback(R.drawable.transparent)
+            .transition(withCrossFade(300))
+            .apply(RequestOptions().skipMemoryCache(false).transform(MultiTransformation
+            (CenterCrop(), RoundedCorners(4))))
+            .into(this)
+}
+
+fun ImageView.loadImage(file:File){
+    Glide.with(this)
+            .load(file).transition(withCrossFade(300))
+            .placeholder(R.drawable.transparent)
+            .fallback(R.drawable.transparent)
+            .transition(withCrossFade(300))
+            .apply(RequestOptions().skipMemoryCache(false).transform(MultiTransformation
+            (CenterCrop(), RoundedCorners(4))))
+            .into(this)
+}
+
+fun ImageView.loadImage(resId:Int){
+    Glide.with(this)
+            .load(resId).transition(withCrossFade(300))
             .placeholder(R.drawable.transparent)
             .fallback(R.drawable.transparent)
             .transition(withCrossFade(300))
