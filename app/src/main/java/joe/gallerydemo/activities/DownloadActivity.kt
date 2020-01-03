@@ -35,7 +35,7 @@ class DownloadActivity : AppCompatActivity() {
     }
 
     private val dirPath:String by lazy {
-        file.absolutePath
+        file.parent
     }
 
     private val dialogFragment:MeDialogFragment by lazy {
@@ -63,21 +63,24 @@ class DownloadActivity : AppCompatActivity() {
     }
 
     private fun download(){
+        LogUtils.i("curry","dirPath:${dirPath}")
         PRDownloader.download(APK_URL,dirPath, APK_FILENAME)
                 .build()
                 .setOnProgressListener {
 //                    LogUtils.i("joe"," total : "+it.totalBytes+", current :"+it.currentBytes)
-                    val ret = (it.currentBytes/it.totalBytes) * 100
-                    LogUtils.i(" ret :$ret")
+                    val ret = (it.currentBytes.toFloat()/it.totalBytes.toFloat()) * 100
+                    LogUtils.i(" ret :${ret.toInt()}")
                     if (dialogFragment!=null){
                         dialogFragment.updateProgress(ret.toInt())
                     }
                 }.start(object: OnDownloadListener{
                     override fun onDownloadComplete() {
+                        dialogFragment.dismiss()
                         openApk()
                     }
 
                     override fun onError(error: Error?) {
+                        dialogFragment.dismiss()
                         ToastUtils.showShort(error?.serverErrorMessage)
                     }
                 })
@@ -90,7 +93,7 @@ class DownloadActivity : AppCompatActivity() {
     fun openApk(){
         var intent = Intent(Intent.ACTION_VIEW).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            if (Build.VERSION.SDK_INT>=24){
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
                 val uri = FileProvider.getUriForFile(this@DownloadActivity,AUTHORITY,file)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 setDataAndType(uri, APK_INSTALL_TYPE)

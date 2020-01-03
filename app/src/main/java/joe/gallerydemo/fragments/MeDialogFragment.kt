@@ -57,6 +57,8 @@ class MeDialogFragment : DialogFragment() {
     private fun initClick(){
         upgrade_under_right.setOnClickListener {
             upgrade_progress.visibility = View.VISIBLE
+            upgrade_under_right.isClickable = false
+            upgrade_under_left.isClickable = false
             if (mListener!= null){
                 mListener.onDownload()
             }
@@ -64,6 +66,7 @@ class MeDialogFragment : DialogFragment() {
         upgrade_under_left.setOnClickListener { dismiss() }
         upgrade_force.setOnClickListener {
             upgrade_progress.visibility = View.VISIBLE
+            upgrade_force.isClickable = false
             if (mListener!= null){
                 mListener.onForce()
             }
@@ -71,6 +74,13 @@ class MeDialogFragment : DialogFragment() {
 
     }
 
+
+    fun onDownloadComplete(){
+        upgrade_force.isClickable = true
+        upgrade_under_right.isClickable = false
+        upgrade_under_left.isClickable = false
+
+    }
 
     private fun startDownload(){
         upgrade_progress.visibility = View.VISIBLE
@@ -111,6 +121,5 @@ class MeDialogFragment : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        anim.cancel()
     }
 }
