@@ -46,15 +46,15 @@ class ImageFragment : Fragment() {
         private const val ARG_POSITION = "position"
 
         @JvmStatic
-        fun newInstance(position: Int, path: String?, uri: Uri): ImageFragment {
-            val fragment = ImageFragment()
-            val args = Bundle()
-            args.putInt(ARG_POSITION, position)
-            args.putString(ARG_PATH, path)
-            args.putParcelable(ARG_URI, uri)
-            fragment.arguments = args
-            return fragment
-        }
+        fun newInstance(position: Int, path: String?, uri: Uri): ImageFragment =
+            ImageFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_POSITION, position)
+                    putString(ARG_PATH, path)
+                    putParcelable(ARG_URI, uri)
+                }
+            }
+
     }
 }// Required empty public constructor
 
