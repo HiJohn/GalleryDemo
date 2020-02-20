@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="ColorDashTextView">
+        <!--stroke width and color, dash width, dash gap-->
+        <attr name="cdt_strokeDashWidth" format="dimension|reference"/>
+        <attr name="cdt_strokeDashGap" format="dimension|reference"/>
+        <attr name="cdt_strokeWidth" format="dimension|reference"/>
+        <attr name="cdt_strokeColor" format="color|reference"/>
+        <!--background radius, color-->
+        <attr name="cdt_radius" format="dimension|reference"/>
+        <attr name="cdt_backgroundColor" format="color|reference"/>
+    </declare-styleable>
+
+</resources>
